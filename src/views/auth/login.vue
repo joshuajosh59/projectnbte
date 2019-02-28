@@ -50,6 +50,7 @@ export default {
     #overall{
         width: 100%;
         height: 100%;
+        padding: 0px;
     }
     .icon-container{
         width: 50px; 
@@ -80,8 +81,10 @@ export default {
     .signup{
         width: 100%;
         background: #03913F !important;
+        border-radius: 6px !important;
     }
     .form-control{
         margin-top: 5px;
+        border-radius: 6px !important;
     }
 </style>
