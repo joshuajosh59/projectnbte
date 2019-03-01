@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import authenticationComponent from './views/auth/authContainer.vue'
 import loginComponent from './views/auth/login.vue'
-import dashboardComponent from "./views/dashboard/dashContainer.vue";
+import dashboardComponent from "./views/dashboard/dashContainer.vue"
+import newsComponent from "./views/dashboard/news.vue"
 
 Vue.use(Router)
 
@@ -27,7 +28,7 @@ export default new Router({
       children: [
         {
           path: "/news",
-          component: loginComponent
+          component: newsComponent
         }
       ]
     }

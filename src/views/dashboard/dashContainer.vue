@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="all">
         <div class="top-nav">
             <div class="inner-brand">
                 <div>
@@ -22,8 +22,8 @@
                 </div>
             </div>
         </div>
-        <b-row>
-            <b-col sm="2" class="side-nav" v-show="display">
+        <div style="display: flex; flex-direction: row">
+            <div class="side-nav" v-show="display">
                 <ul class="side-links montserrat">
                     <li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'th']" size="2x"/><span class="span">Overview</span></li>
                     <li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'university']" size="2x"/><span class="span">Institution</span></li>
@@ -37,14 +37,21 @@
                     <li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'cog']" size="2x"/><span class="span">Settings</span></li><hr style="border: 0.4px solid #EFEFEF">
                     <li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'book-reader']" size="2x"/><span class="span">Documentation</span></li>
                 </ul>
-            </b-col>
-            <b-col md="10"></b-col> 
-        </b-row>
+            </div>
+            <div class="main">
+                <news/>
+            </div> 
+        </div>
     </div>
 </template>
 
 <script>
+import news from './news'
+
 export default {
+    components: {
+        'news': news
+    },
     data () {
         return {
             display: true            
@@ -59,10 +66,16 @@ export default {
 </script>
 
 <style scoped>
+    #all{
+        overflow-y:hidden;
+        height: 100%;
+    }
     .top-nav {
         background: #03913F;
         height: 60px;
         width: 100%;
+        z-index: 4;
+        position: fixed;
     }
     .open-sans{
         font-family: 'Open Sans', sans-serif;
@@ -84,12 +97,12 @@ export default {
         margin-top: 2px !important;
     }
     .side-nav{
-        height: 100%;
+        height: 100vh;
         background: #03913F;
-        position: fixed;
-        min-width: 200px;
-        max-width: 200px;
+        min-width: 250px;
+        max-width: 250px;
         display: block;
+        position: fixed;
     }
     .side-links{
         list-style: none;
@@ -107,10 +120,20 @@ export default {
         margin: 5px 0;
         cursor: pointer;
     }
+    .main{
+        margin: 60px 0 0 250px ;
+        padding: 20px;
+        width: 100%
+    }
 
     @media (max-width: 920px) {
         .name{
             display: none;
+        }
+        .main{
+            margin: 60px 0 0 0;
+            padding: 20px; 
+            width: 100%
         }
     }
 
