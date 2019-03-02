@@ -5,14 +5,17 @@
                 <div>
                     <b-row>
                         <font-awesome-icon @click="toggleNav" class="menu" :icon="['fas', 'bars']" size="2x"/>                        
-                        <b style="color: white; font-size: 26px" class="montserrat brand">NBTE</b>
+                        <b class="montserrat brand">NBTE</b>
                     </b-row>
                 </div>
                 <div style="flex-grow: 1; width: 350px; margin-left: 40px">
-                    <input placeholder="Search" class="form-control mx-auto" type="text"/>
+                    <input placeholder="Search" ref="xxx" class="form-control xxx mx-auto" type="text"/>
+                </div>
+                <div>
+                    <font-awesome-icon ref="bell" @click="search" class="bell" :icon="['fas', 'search']" size="1x"/>
                 </div>
                 <div style="padding: 0 20px">
-                    <font-awesome-icon style="color: white; margin: 12px;" :icon="['far', 'bell']" size="1x"/>
+                    <font-awesome-icon class="notification" :icon="['far', 'bell']" size="1x"/>
                 </div>
                 <div style="padding: 0 10px">
                     <img src="./../../assets/Library-2-700x338.jpg" style="border-radius: 100%; margin-top: 5px" width="30" height="30" />
@@ -54,12 +57,15 @@ export default {
     },
     data () {
         return {
-            display: true            
+            display: true,  
         }
     },
     methods : {
         toggleNav: function () {
             this.display = !this.display
+        },
+        search: function () {
+            this.$refs.xxx.style.display = "none"? this.$refs.xxx.style.display = "block": this.$refs.xxx.style.display = "none";
         }
     }
 }
@@ -69,6 +75,10 @@ export default {
     #all{
         overflow-y:hidden;
         height: 100%;
+    }
+    .notification{
+        color: white; 
+        margin: 12px;
     }
     .top-nav {
         background: #03913F;
@@ -99,10 +109,12 @@ export default {
     .side-nav{
         height: 100vh;
         background: #03913F;
-        min-width: 250px;
-        max-width: 250px;
+        min-width: 230px;
+        max-width: 230px;
         display: block;
         position: fixed;
+        z-index: 3;
+        padding-right: 10px
     }
     .side-links{
         list-style: none;
@@ -121,9 +133,18 @@ export default {
         cursor: pointer;
     }
     .main{
-        margin: 60px 0 0 250px ;
+        margin: 60px 0 0 230px ; 
         padding: 20px;
-        width: 100%
+    }
+    .brand{
+        color: white; 
+        font-size: 26px;
+    }
+    .bell{
+        color: white; margin-top: 13px;
+        display: none;
+        cursor: pointer;
+        margin-left: 10px
     }
 
     @media (max-width: 920px) {
@@ -132,8 +153,22 @@ export default {
         }
         .main{
             margin: 60px 0 0 0;
-            padding: 20px; 
             width: 100%
+        }
+        .menu{
+            display: block;
+        }
+        .brand{
+            font-size: 26px;
+            display: none;
+        }
+        .bell {
+            color: white; 
+            margin-top: 13px;
+            display: block
+        }
+        .xxx{
+            display: none
         }
     }
 
@@ -143,6 +178,7 @@ export default {
         }
         .brand{
             display: none;
+            font-size: 26px;
         }
     }
 </style>
