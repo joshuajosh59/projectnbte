@@ -1,9 +1,9 @@
 <template>
-    <div id="news">
+    <div id="user">
         <b-row>
             <div class="top-display">
-                <b style="margin-left: 10px; font-size: 20px" class="montserrat">News</b>
-                <b-btn class="buttons">Add News</b-btn>
+                <b style="margin-left: 10px; font-size: 20px" class="montserrat">Users</b>
+                <b-btn class="buttons">Add User</b-btn>
             </div>
         </b-row><br>
         <b-row>
@@ -13,13 +13,13 @@
                         <p>All(11)</p>
                     </div>
                     <div class="top-display-items green">
-                        <p>Mine (8)</p>
+                        <p>Administrator (2)</p>
                     </div>
                     <div class="top-display-items green">
-                        <p>Published (10)</p>
+                        <p>Programmes(1)</p>
                     </div>
                     <div class="top-display-items green">
-                        <p>Draft</p>
+                        <p>Personel(1)</p>
                     </div><br><br>
                 </div>
             </b-col>
@@ -49,14 +49,14 @@
                         <th>
                             <label class="form-checkbox">
                                 <input type="checkbox" v-model="selectAll" @click="select">
-                                <i class="form-icon"></i> 
+                                <i class="form-icon"></i>
                             </label>
                         </th>
-                        <th>Number</th>
+                        <th>Username</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
                         <th>News</th>
-                        <th>Status</th>
-                        <th>Last Updated</th>
-                        <th>Notes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,11 +67,11 @@
                                 <i class="form-icon"></i>
                             </label>
                         </td>
-                        <td>{{i.number}}</td>
-                        <td>{{i.title}}</td>
-                        <td>{{i.status}}</td>
-                        <td>{{i.lastUpdated}}</td>
-                        <td>{{i.notes}}</td>
+                        <td>{{i.username}}</td>
+                        <td>{{i.name}}</td>
+                        <td>{{i.email}}</td>
+                        <td>{{i.role}}</td>
+                        <td>{{i.news}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -85,14 +85,10 @@ export default {
     data() {
         return {
             items: [
-                { id: '1', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/12/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '2', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/13/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '3', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/14/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '4', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/15/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '5', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/16/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '3', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/14/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '4', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/15/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '5', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/16/2019', notes: 'The universe is a big place, perherps the biggest...'},
+                { username: 'Dewole', name: 'Adewole Ajao', email: 'dewole@forum.org.ng', role: 'Administrator', news: '1'},
+                { username: 'Joshua', name: 'Joshua Joshua', email: 'dewole@forum.org.ng', role: 'Programmes', news: '2'},
+                { username: 'Rashida', name: 'Rashida Umar', email: 'dewole@forum.org.ng', role: 'Personel', news: '10'},
+                { username: 'Abednego', name: 'Abednego Kyona', email: 'dewole@forum.org.ng', role: 'Administrator', news: '21'}, 
             ],
             selected: [],
             selectAll: false
@@ -112,7 +108,7 @@ export default {
 </script>
 
 <style scoped>
-    #news {
+    #user {
         width: 100%;
         background: #F6F5FD;
         padding: 20px

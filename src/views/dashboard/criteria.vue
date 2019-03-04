@@ -1,9 +1,9 @@
 <template>
-    <div id="news">
+    <div id="criteria">
         <b-row>
             <div class="top-display">
-                <b style="margin-left: 10px; font-size: 20px" class="montserrat">News</b>
-                <b-btn class="buttons">Add News</b-btn>
+                <b style="margin-left: 10px; font-size: 20px" class="montserrat">Ranking Criteria</b>
+                <b-btn class="buttons">Add Criteria</b-btn>
             </div>
         </b-row><br>
         <b-row>
@@ -11,9 +11,6 @@
                 <div class="top-display" style="margin-top: 10px">
                     <div class="top-display-items">
                         <p>All(11)</p>
-                    </div>
-                    <div class="top-display-items green">
-                        <p>Mine (8)</p>
                     </div>
                     <div class="top-display-items green">
                         <p>Published (10)</p>
@@ -49,14 +46,13 @@
                         <th>
                             <label class="form-checkbox">
                                 <input type="checkbox" v-model="selectAll" @click="select">
-                                <i class="form-icon"></i> 
+                                <i class="form-icon"></i>
                             </label>
                         </th>
                         <th>Number</th>
-                        <th>News</th>
-                        <th>Status</th>
+                        <th>Name</th>
+                        <th>Weight</th>
                         <th>Last Updated</th>
-                        <th>Notes</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,10 +64,9 @@
                             </label>
                         </td>
                         <td>{{i.number}}</td>
-                        <td>{{i.title}}</td>
-                        <td>{{i.status}}</td>
+                        <td>{{i.name}}</td>
+                        <td>{{i.weight}}</td>
                         <td>{{i.lastUpdated}}</td>
-                        <td>{{i.notes}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -85,14 +80,14 @@ export default {
     data() {
         return {
             items: [
-                { id: '1', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/12/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '2', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/13/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '3', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/14/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '4', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/15/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '5', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/16/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '3', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/14/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '4', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/15/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '5', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/16/2019', notes: 'The universe is a big place, perherps the biggest...'},
+                { number: '1', name: 'Percentage of programmes with full accreditation', weight: '6', lastUpdated: '9/12/2019'},
+                { number: '2', name: 'Percentage of programmes with full accreditation', weight: '8', lastUpdated: '9/13/2019'},
+                { number: '3', name: 'Percentage of programmes with full accreditation', weight: '9', lastUpdated: '9/14/2019'},
+                { number: '4', name: 'Percentage of programmes with full accreditation', weight: '10', lastUpdated: '9/15/2019'},
+                { number: '5', name: 'Percentage of programmes with full accreditation', weight: '4', lastUpdated: '9/16/2019'},
+                { number: '3', name: 'Percentage of programmes with full accreditation', weight: '3', lastUpdated: '9/14/2019'},
+                { number: '4', name: 'Percentage of programmes with full accreditation', weight: '7', lastUpdated: '9/15/2019'},
+                { number: '5', name: 'Percentage of programmes with full accreditation', weight: '2', lastUpdated: '9/16/2019'},
             ],
             selected: [],
             selectAll: false
@@ -112,7 +107,7 @@ export default {
 </script>
 
 <style scoped>
-    #news {
+    #criteria {
         width: 100%;
         background: #F6F5FD;
         padding: 20px

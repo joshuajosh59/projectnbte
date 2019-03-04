@@ -1,9 +1,9 @@
 <template>
-    <div id="news">
+    <div id="institution">
         <b-row>
             <div class="top-display">
-                <b style="margin-left: 10px; font-size: 20px" class="montserrat">News</b>
-                <b-btn class="buttons">Add News</b-btn>
+                <b style="margin-left: 10px; font-size: 20px" class="montserrat">Institution</b>
+                <b-btn class="buttons">Add Institution</b-btn>
             </div>
         </b-row><br>
         <b-row>
@@ -53,7 +53,7 @@
                             </label>
                         </th>
                         <th>Number</th>
-                        <th>News</th>
+                        <th>Institution</th>
                         <th>Status</th>
                         <th>Last Updated</th>
                         <th>Notes</th>
@@ -85,14 +85,14 @@ export default {
     data() {
         return {
             items: [
-                { id: '1', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/12/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '2', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/13/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '3', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/14/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '4', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/15/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '5', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/16/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '3', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/14/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '4', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/15/2019', notes: 'The universe is a big place, perherps the biggest...'},
-                { id: '5', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/16/2019', notes: 'The universe is a big place, perherps the biggest...'},
+                { id: '1', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/12/2019', notes: 'The universe is a big place, perherps the biggest...'},
+                { id: '2', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/13/2019', notes: 'The universe is a big place, perherps the biggest...'},
+                { id: '3', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/14/2019', notes: 'The universe is a big place, perherps the biggest...'},
+                { id: '4', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/15/2019', notes: 'The universe is a big place, perherps the biggest...'},
+                { id: '5', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/16/2019', notes: 'The universe is a big place, perherps the biggest...'},
+                { id: '3', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/14/2019', notes: 'The universe is a big place, perherps the biggest...'},
+                { id: '4', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/15/2019', notes: 'The universe is a big place, perherps the biggest...'},
+                { id: '5', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/16/2019', notes: 'The universe is a big place, perherps the biggest...'},
             ],
             selected: [],
             selectAll: false
@@ -109,10 +109,11 @@ export default {
         }
     }
 }
+
 </script>
 
 <style scoped>
-    #news {
+    #institution {
         width: 100%;
         background: #F6F5FD;
         padding: 20px

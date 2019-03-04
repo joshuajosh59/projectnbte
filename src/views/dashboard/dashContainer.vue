@@ -26,15 +26,14 @@
             </div>
         </div>
         <div style="display: flex; flex-direction: row">
-            <div class="side-nav" v-show="display">
+            <div class="side-nav" v-show="display"><br><br><br>
                 <ul class="side-links montserrat">
                     <li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'th']" size="2x"/><span class="span">Overview</span></li>
-                    <li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'university']" size="2x"/><span class="span">Institution</span></li>
-                    <li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'list-alt']" size="2x"/><span class="span">Criteria</span></li>
+                    <router-link class="institution" @click="makeActive('institution')" to="/institution"><li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'university']" size="2x"/><span class="span">Institution</span></li></router-link>
+                    <router-link class="criteria" @click="makeActive('criteria')" to="/criteria"><li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'list-alt']" size="2x"/><span class="span">Criteria</span></li></router-link>
                     <li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'book-open']" size="2x"/><span class="span">Programme</span></li>
-                    <li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['far', 'bell']" size="2x"/><span class="span">News</span></li>
-                    <li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'bookmark']" size="2x"/><span class="span">Pages</span></li>
-                    <li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'user-alt']" size="2x"/><span class="span">Users</span></li>
+                    <router-link class="news" @click="makeActive('news')" to="/news"><li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['far', 'bell']" size="2x"/><span class="span">News</span></li></router-link>
+                    <router-link class="users" @click="makeActive('users')" to="/users"><li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'user-alt']" size="2x"/><span class="span">Users</span></li></router-link>
                     <li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'user-tie']" size="2x"/><span class="span">Staff</span></li>
                     <li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'th-large']" size="2x"/><span class="span">Menu</span></li>
                     <li class="list-link"><font-awesome-icon style="color: white; padding-top: 10px; padding-right: 15px;" :icon="['fas', 'cog']" size="2x"/><span class="span">Settings</span></li><hr style="border: 0.4px solid #EFEFEF">
@@ -42,22 +41,18 @@
                 </ul>
             </div>
             <div class="main">
-                <news/>
+                <router-view/>
             </div> 
         </div>
     </div>
 </template>
 
 <script>
-import news from './news'
-
 export default {
-    components: {
-        'news': news
-    },
     data () {
         return {
             display: true,  
+            active: 'institution'
         }
     },
     methods : {
@@ -65,7 +60,7 @@ export default {
             this.display = !this.display
         },
         search: function () {
-            this.$refs.xxx.style.display = "none"? this.$refs.xxx.style.display = "block": this.$refs.xxx.style.display = "none";
+            this.$refs.xxx.style.display = "block";
         }
     }
 }
@@ -118,9 +113,14 @@ export default {
     }
     .side-links{
         list-style: none;
+        padding-left: 20px;
     }
     .list-link{
         padding: 8px 0;
+    }
+    .institution, .criteria, .news, .users{
+        color: #03913F;
+        background: white;
     }
     .span{
         color: rgb(255, 255, 255) !important;
@@ -133,8 +133,8 @@ export default {
         cursor: pointer;
     }
     .main{
-        margin: 60px 0 0 230px ; 
-        padding: 20px;
+        margin: 60px 0 0 230px ;
+        /* padding:20px; */
     }
     .brand{
         color: white; 

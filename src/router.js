@@ -4,6 +4,9 @@ import authenticationComponent from './views/auth/authContainer.vue'
 import loginComponent from './views/auth/login.vue'
 import dashboardComponent from "./views/dashboard/dashContainer.vue"
 import newsComponent from "./views/dashboard/news.vue"
+import institutionComponent from "./views/dashboard/institution.vue"
+import criteriaComponent from "./views/dashboard/criteria.vue"; 
+import usersComponent from "./views/dashboard/user.vue"; 
 
 Vue.use(Router)
 
@@ -29,6 +32,18 @@ export default new Router({
         {
           path: "/news",
           component: newsComponent
+        },
+        {
+          path: "/institution",
+          component: institutionComponent
+        },
+        {
+          path: "/criteria",
+          component: criteriaComponent
+        },
+        {
+          path: "/users",
+          component: usersComponent
         }
       ]
     }
