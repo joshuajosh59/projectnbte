@@ -17,17 +17,17 @@
         <div class="login-form">
             <b-container>
                 <div style="padding: 0 50px">
-                    <b-form><br><br>
+                    <b-form @submit.prevent="login"><br><br>
                         <b class="montserrat" style="font-size: 14px; color: #000;">Email Address</b>
-                        <b-form-input id="exampleInput1" type="email" required placeholder="Email" />
+                        <b-form-input v-model="user.email" type="email" required placeholder="Email" />
                         <br>
                         <b-row>
                             <b-col sm="5"><b class="montserrat" style="font-size: 14px; color: #000;">Password</b></b-col>
                             <b-col sm="7"><b class="montserrat" style="font-size: 14px; color: #03913F;">Forgot your password?</b></b-col>
                         </b-row>
-                        <b-form-input id="exampleInput1" type="email" required placeholder="Password" />
+                        <b-form-input v-model="user.password" type="password" required placeholder="Password" />
                         <br>
-                        <b-button type="submit" class="signup">Sign in</b-button> <br>
+                        <b-button type="submit" @click="login" class="signup">Sign in</b-button> <br>
                         <b></b><br><br><br>
                     </b-form>
                 </div>
@@ -37,10 +37,26 @@
 </template>
 
 <script>
+import { url } from '@/config.js'
+
 export default {
     data () {
         return {
-
+            user: {
+                email: '',
+                password: ''
+            }
+        }
+    },
+    methods: {
+        login: function () {
+            this.$http.post( url + 'login', this.user).then((response) => {
+                const authUser = {}
+                authUser.token = response.data.token.token
+                authUser.refreshToken = response.data.token.refreshToken
+                window.localStorage.setItem('authUser', JSON.stringify(authUser))
+                console.log(response.data);
+            });
         }
     }
 }

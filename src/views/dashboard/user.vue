@@ -29,7 +29,7 @@
                         <input placeholder="Search" class="form-control mx-auto" type="text"/>
                     </div>
                     <div style="flex-grow: 1; width: 350px; margin-top: 10px">
-                        <b-btn class="buttons">Search</b-btn>
+                        <b-btn class="buttons" style="padding: 8px 40px">Search</b-btn>
                     </div>
                 </div>
             </b-col>
