@@ -1,5 +1,5 @@
 <template>
-    <div id="institution" :key="pageKey">
+    <div id="institution">
         <b-row>
             <div class="top-display">
                 <b style="margin-left: 10px; font-size: 20px" class="montserrat">Institution</b>
@@ -60,28 +60,53 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="i in institutions" :key="i">
-                        <td>
-                            <label class="form-checkbox">
-                                <input type="checkbox" :value="i.id" v-model="selected">
-                                <i class="form-icon"></i>
-                            </label>
-                        </td>
-                        <td>{{i.rank}}</td>
-                        <td>{{i.name}}</td>
-                        <td>{{i.location}}</td>
-                        <td>{{i.year_established}}</td>
-                        <td>{{i.about}}</td>
-                        <td>
-                            <!-- <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/> -->
-                            <div class="dropdown" style="margin-left: auto; margin-right: 20px">
-                                <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/>
-                                <ul class="dropdown-menu" style="position: absolute; top: -10px; margin-left: -150px">
-                                    <li><a href="#home">Edit Institution</a></li>
-                                    <li><a href="#about" @click="deleteInstitution(i.id)">Trash Institution</a></li>
-                                </ul>                                                        
-                            </div>
-                        </td> 
+                    <tr v-for="i in institutions" :key="i.id">
+                        <template v-if="editId == i.id">
+                            <td>
+                                <label class="form-checkbox">
+                                    <input type="checkbox" :value="i.id" v-model="selected">
+                                    <i class="form-icon"></i>
+                                </label>
+                            </td>
+                            <td>{{i.rank}}</td>
+                            <td><input v-model="editSchool.name" type="text"></td>
+                            <td><input v-model="editSchool.location" type="text"></td>
+                            <td><input v-model="editSchool.year_established" type="text"></td>
+                            <td><input v-model="editSchool.about" type="text"></td>
+                            <td>
+                                <b-row>
+                                    <span class="icon" style="margin-right: 20px">
+                                        <font-awesome-icon style="cursor: pointer" @click="editInstitution(i.id)" class="menu" :icon="['fas', 'check']" size="1x"/>
+                                    </span>
+                                    <span class="icon">
+                                        <font-awesome-icon style="cursor: pointer" class="menu" :icon="['fas', 'ban']" size="1x"/>
+                                    </span>
+                                </b-row>
+                            </td>
+                        </template>
+                        <template v-else>
+                            <td>
+                                <label class="form-checkbox">
+                                    <input type="checkbox" :value="i.id" v-model="selected">
+                                    <i class="form-icon"></i>
+                                </label>
+                            </td>
+                            <td>{{i.rank}}</td>
+                            <td>{{i.name}}</td>
+                            <td>{{i.location}}</td>
+                            <td>{{i.year_established}}</td>
+                            <td>{{i.about}}</td>
+                            <td>
+                                <!-- <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/> -->
+                                <div class="dropdown" style="margin-left: auto; margin-right: 20px">
+                                    <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/>
+                                    <ul class="dropdown-menu" style="position: absolute; top: -10px; margin-left: -150px">
+                                        <li><a style="cursor: pointer" @click="edit(i)">Edit Institution</a></li>
+                                        <li><a style="cursor: pointer" @click="deleteInstitution(i.id)">Trash Institution</a></li>
+                                    </ul>                                                        
+                                </div>
+                            </td> 
+                        </template>
                     </tr>
                 </tbody>
             </table>
@@ -107,11 +132,11 @@
                     <b-form-input v-model="schoolInfo.website" type="text" placeholder="Website URL" />
                 </b-col> 
             </b-row>
-            <b-conatiner>
+            <div>
                 <b-form-textarea style="padding-top: 18px" v-model="schoolInfo.about" placeholder="About School" rows="3" max-rows="6"/>
-            </b-conatiner>
+            </div>
         </b-modal>
-        <b-pagination size="md" :total-rows="lastPage" v-model="currentPage" :per-page="perPage" />
+        <b-pagination style="margin-top:20px" size="md" :total-rows="lastPage" v-model="currentPage" :per-page="perPage" />
     </div>
 </template>
 
@@ -121,7 +146,7 @@ import { getHeader, url } from '@/config.js'
 export default {
     data() {
         return {
-            pageKey: 1,
+            editId: '',
             currentPage: null,
             lastPage: null,
             perPage: null,
@@ -137,6 +162,12 @@ export default {
             ],
             selected: [],
             selectAll: false,
+            editSchool: {
+                name: "",
+                location: "",
+                year_established: "",
+                about: "",
+            },
             schoolInfo: {
                 name: "",
                 category: null,
@@ -162,7 +193,7 @@ export default {
             options1: [
                 { value: null, text: 'Choose Ownership' },
                 { value: "private", text: 'Private' },
-                { value: "federalx", text: 'Federal' },
+                { value: "federal", text: 'Federal' },
                 { value: "state", text: 'State' },
             ],
             institutions: []
@@ -184,9 +215,27 @@ export default {
             })
         },
         deleteInstitution: function (id){
-            this.$http.delete(url + 'institutions/' + id, {headers: getHeader()}).then((response) => {
+            this.$http.delete(url + 'institutions/' + id, {headers: getHeader()}).then(() => {
                 this.getInstitutions();
             })
+        },
+        edit: function(institution) {
+            this.editId = institution.id
+            this.editSchool.name = institution.name
+            this.editSchool.location = institution.location
+            this.editSchool.year_established = institution.year_established
+            this.editSchool.about = institution.about
+        },
+        editInstitution: function(id){
+            this.$http.put(url + 'institutions/' + id, this.editSchool, {headers: getHeader()}).then((response) => {
+                this.getInstitutions();
+				console.log(response.data);
+            })
+            this.editId = ""
+            this.editSchool.name = ""
+            this.editSchool.location = ""
+            this.editSchool.year_established = ""
+            this.editSchool.about = ""
         },
         getInstitutions:function () {
             this.$http.get(url + 'institutions?page=1,size=10').then((response) => {
@@ -217,9 +266,11 @@ export default {
         background: #ffffff;
         color: #333333;
     }
-
+	th{
+		white-space: nowrap
+	}
     .dropdown a:hover {
-        background: #e5e5e5;
+        background: #56f063;
     }
     .dropdown {
         position: relative;
