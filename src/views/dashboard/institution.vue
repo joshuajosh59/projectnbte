@@ -61,7 +61,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="i in institutions" :key="i.id">
-                        <template v-if="editId == i.id">
+                        <!-- <template v-if="editId == i.id">
                             <td>
                                 <label class="form-checkbox">
                                     <input type="checkbox" :value="i.id" v-model="selected">
@@ -83,8 +83,8 @@
                                     </span>
                                 </b-row>
                             </td>
-                        </template>
-                        <template v-else>
+                        </template> -->
+                        <template>
                             <td>
                                 <label class="form-checkbox">
                                     <input type="checkbox" :value="i.id" v-model="selected">
@@ -112,6 +112,30 @@
             </table>
             </div>
         </div>
+        <b-modal @ok="editInstitution(editId)" ok-title="Edit" ref="modal2" centered title="Edit Institution">
+            <b-row>
+                <b-col md="6">
+                    <b-form-input v-model="editSchool.name" type="text" placeholder="Institution Name" />
+                    <b-form-input v-model="editSchool.address" type="text" placeholder="Address" />
+                    <b-form-input v-model="editSchool.phone" type="text" placeholder="Phone Number" />
+                    <b-form-input v-model="editSchool.facebook" type="text" placeholder="Facebook URL" />
+                    <b-form-input v-model="editSchool.linkedin" type="text" placeholder="LinkedIn URL" />
+                    <b-form-select style="border-radius: 38px" v-model="editSchool.ownership" :options="options1" class="mt-1" />
+                    <b-form-input v-model="editSchool.location" type="text" placeholder="Location" />
+                </b-col>
+                <b-col md="6">
+                    <b-form-select style="border-radius: 38px" v-model="editSchool.category" :options="options" class="" />
+                    <b-form-input v-model="editSchool.year_established" type="text" placeholder="Year Established" />
+                    <b-form-input v-model="editSchool.email" type="email" placeholder="Institution Email" />
+                    <b-form-input v-model="editSchool.twitter" type="text" placeholder="Twitter URL" />
+                    <b-form-input v-model="editSchool.instagram" type="text" placeholder="Instagram URL" />
+                    <b-form-input v-model="editSchool.website" type="text" placeholder="Website URL" />
+                </b-col> 
+            </b-row>
+            <div>
+                <b-form-textarea style="padding-top: 18px" v-model="editSchool.about" placeholder="About School" rows="3" max-rows="6"/>
+            </div>
+        </b-modal>
         <b-modal @ok="addInstitution" ok-title="Add" id="modal1" centered title="Add Institution">
             <b-row>
                 <b-col md="6">
@@ -164,9 +188,19 @@ export default {
             selectAll: false,
             editSchool: {
                 name: "",
-                location: "",
-                year_established: "",
+                category: null,
+                email:"",
                 about: "",
+                address: "",
+                phone: "",
+                year_established: "",
+                facebook: "",
+                twitter: "",
+                linkedin: "",
+                instagram: "",
+                ownership: null,
+                location: "",
+                website: ""
             },
             schoolInfo: {
                 name: "",
@@ -220,8 +254,19 @@ export default {
             })
         },
         edit: function(institution) {
+            this.$refs.modal2.show()
             this.editId = institution.id
             this.editSchool.name = institution.name
+            this.editSchool.category = institution.category
+            this.editSchool.email = institution.email
+            this.editSchool.address = institution.address
+            this.editSchool.phone = institution.phone
+            this.editSchool.facebook = institution.facebook
+            this.editSchool.twitter = institution.twitter
+            this.editSchool.instagram = institution.instagram
+            this.editSchool.linkedin = institution.linkedin
+            this.editSchool.website = institution.website
+            this.editSchool.ownership = institution.ownership
             this.editSchool.location = institution.location
             this.editSchool.year_established = institution.year_established
             this.editSchool.about = institution.about
@@ -229,13 +274,7 @@ export default {
         editInstitution: function(id){
             this.$http.put(url + 'institutions/' + id, this.editSchool, {headers: getHeader()}).then((response) => {
                 this.getInstitutions();
-				console.log(response.data);
             })
-            this.editId = ""
-            this.editSchool.name = ""
-            this.editSchool.location = ""
-            this.editSchool.year_established = ""
-            this.editSchool.about = ""
         },
         getInstitutions:function () {
             this.$http.get(url + 'institutions?page=1,size=10').then((response) => {
