@@ -1,51 +1,56 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import authenticationComponent from './views/auth/authContainer.vue'
-import loginComponent from './views/auth/login.vue'
-import dashboardComponent from "./views/dashboard/dashContainer.vue"
-import newsComponent from "./views/dashboard/news.vue"
-import institutionComponent from "./views/dashboard/institution.vue"
-import criteriaComponent from "./views/dashboard/criteria.vue"; 
-import usersComponent from "./views/dashboard/user.vue"; 
+import Vue from 'vue';
+import Router from 'vue-router';
+import authenticationComponent from './views/auth/authContainer.vue';
+import loginComponent from './views/auth/login.vue';
+import dashboardComponent from './views/dashboard/dashContainer.vue';
+import newsComponent from './views/dashboard/news.vue';
+import institutionComponent from './views/dashboard/institution.vue';
+import criteriaComponent from './views/dashboard/criteria.vue';
+import usersComponent from './views/dashboard/user.vue';
+import addInstitution from './views/dashboard/addInstitution.vue';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/",
-      redirect: "/login",
+      path: '/',
+      redirect: '/login',
       component: authenticationComponent,
       children: [
         {
-          path: "/login",
-          component: loginComponent
-        }
-      ]
+          path: '/login',
+          component: loginComponent,
+        },
+      ],
     },
     {
-      path: "/navs",
+      path: '/navs',
       component: dashboardComponent,
       children: [
         {
-          path: "/news",
-          component: newsComponent
+          path: '/news',
+          component: newsComponent,
         },
         {
-          path: "/institution",
-          component: institutionComponent
+          path: '/institution',
+          component: institutionComponent,
         },
         {
-          path: "/criteria",
-          component: criteriaComponent
+          path: '/addnew',
+          component: addInstitution,
         },
         {
-          path: "/users",
-          component: usersComponent
-        }
-      ]
-    }
-  ]
+          path: '/criteria',
+          component: criteriaComponent,
+        },
+        {
+          path: '/users',
+          component: usersComponent,
+        },
+      ],
+    },
+  ],
 });
