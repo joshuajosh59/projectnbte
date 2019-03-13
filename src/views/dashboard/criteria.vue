@@ -56,17 +56,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="i in items" :key="i">
+                    <tr v-for="i in criteria" :key="i.id">
                         <td>
                             <label class="form-checkbox">
                                 <input type="checkbox" :value="i.id" v-model="selected">
                                 <i class="form-icon"></i>
                             </label>
                         </td>
-                        <td>{{i.number}}</td>
+                        <td>{{i.id}}</td>
                         <td>{{i.name}}</td>
                         <td>{{i.weight}}</td>
-                        <td>{{i.lastUpdated}}</td>
+                        <td>{{i.updated_at}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -76,21 +76,14 @@
 </template>
 
 <script>
+import { url } from '@/config.js'
+
 export default {
     data() {
         return {
-            items: [
-                { number: '1', name: 'Percentage of programmes with full accreditation', weight: '6', lastUpdated: '9/12/2019'},
-                { number: '2', name: 'Percentage of programmes with full accreditation', weight: '8', lastUpdated: '9/13/2019'},
-                { number: '3', name: 'Percentage of programmes with full accreditation', weight: '9', lastUpdated: '9/14/2019'},
-                { number: '4', name: 'Percentage of programmes with full accreditation', weight: '10', lastUpdated: '9/15/2019'},
-                { number: '5', name: 'Percentage of programmes with full accreditation', weight: '4', lastUpdated: '9/16/2019'},
-                { number: '3', name: 'Percentage of programmes with full accreditation', weight: '3', lastUpdated: '9/14/2019'},
-                { number: '4', name: 'Percentage of programmes with full accreditation', weight: '7', lastUpdated: '9/15/2019'},
-                { number: '5', name: 'Percentage of programmes with full accreditation', weight: '2', lastUpdated: '9/16/2019'},
-            ],
             selected: [],
-            selectAll: false
+            selectAll: false,
+            criteria: []
         }
     },
     methods:{ 
@@ -101,7 +94,16 @@ export default {
                     this.selected.push(this.items[i].id);
                 }
             }
+        },
+        getCriteria: function () {
+            this.$http.get( url + 'criteria?page=1&size=10').then((response) => {
+                console.log(response.data.data.data)
+                this.criteria = response.data.data.data
+            })
         }
+    },
+    created(){
+        this.getCriteria();
     }
 }
 </script>
