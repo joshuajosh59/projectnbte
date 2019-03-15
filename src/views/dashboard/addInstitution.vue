@@ -11,7 +11,7 @@
     <br>
     <b-row>
       <b-col md="6">
-        <div class="top-display" style="margin-top: 10px">
+        <!-- <div class="top-display" style="margin-top: 10px">
           <div class="top-display-items">
             <p>All(11)</p>
           </div>
@@ -26,7 +26,7 @@
           </div>
           <br>
           <br>
-        </div>
+        </div>-->
       </b-col>
       <b-col md="6">
         <div style="display: flex">
@@ -219,25 +219,23 @@ export default {
       },
       options: [
         { value: null, text: 'Choose Category' },
-        { value: "University", text: 'University' },
         { value: "Polytechnic", text: 'Polytechnic' },
-        { value: "COE", text: 'College of  Education' },
+        { value: "College of Education", text: 'College of Education' },
+        { value: "College of Agriculture", text: 'College of Agriculture' },
+        { value: "College of Health", text: 'College of Health' },
       ],
       options1: [
         { value: null, text: 'Choose Ownership' },
+        { value: "Federal Government Owned", text: 'Federal Government Owned' },
+        { value: "State Government Owned", text: 'State Government Owned' },
         { value: "Private", text: 'Private' },
-        { value: "Government", text: 'Government' },
       ],
-      states: ["Abia", "Adamawa", "Anambra", "Akwa Ibom", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta", "Ebonyi", "Enugu", "Edo", "Ekiti", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"],
+      states: ["Abia", "Adamawa", "Anambra", "Akwa Ibom", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta", "Ebonyi", "Enugu", "Edo", "Ekiti", "FCT", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"],
     }
   },
   methods: {
     addInstitution() {
-      const { name, category, address, year_established, about, email, phone, facebook, twitter, instagram, ownership, location, website } = this.schoolInfo;
-      const data = { name, category, address, year_established, about, email, phone, facebook, twitter, instagram, ownership, location, website };
-      console.log(data);
       this.$http.post(url + 'institutions', this.schoolInfo, { headers: getHeader() }).then((response) => {
-        console.log(response.data);
         if (response.data.success) {
           this.$swal({
             type: 'success',
@@ -254,7 +252,7 @@ export default {
 }
 
 </script>
-<style>
+<style scoped>
 .addNewInstitution label {
   font-weight: 900;
   font-size: 16px;

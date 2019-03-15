@@ -13,9 +13,9 @@
       <b-col md="6">
         <div class="top-display" style="margin-top: 10px">
           <div class="top-display-items">
-            <p>All(11)</p>
+            <p>All({{this.total}})</p>
           </div>
-          <div class="top-display-items border-line green">
+          <!-- <div class="top-display-items border-line green">
             <p>Mine (8)</p>
           </div>
           <div class="top-display-items border-line green">
@@ -23,7 +23,7 @@
           </div>
           <div class="top-display-items green">
             <p>Draft</p>
-          </div>
+          </div>-->
           <br>
           <br>
         </div>
@@ -221,6 +221,15 @@
         />
       </div>
     </b-modal>
+    <b-row>
+      <b-col md="2">
+        <b-form-select v-model="action" style="border-radius: 38px" :options="options"/>
+      </b-col>
+      <b-col md="4">
+        <b-btn class="applyBtn">Apply</b-btn>
+      </b-col>
+      <b-col md="4"></b-col>
+    </b-row>
     <b-pagination
       style="margin-top:20px"
       size="md"
@@ -241,6 +250,7 @@ export default {
       currentPage: null,
       lastPage: null,
       perPage: null,
+      action: '',
       items: [
         { id: '1', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/12/2019', notes: 'The universe is a big place, perherps the biggest...' },
         { id: '2', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/13/2019', notes: 'The universe is a big place, perherps the biggest...' },
@@ -285,6 +295,8 @@ export default {
         location: "",
         website: ""
       },
+      optn: [{ value: null, text: 'Bulk Actions' },
+      { value: "delete", text: 'Delete' },],
       options: [
         { value: null, text: 'Choose Category' },
         { value: "university", text: 'University' },
@@ -297,7 +309,8 @@ export default {
         { value: "federal", text: 'Federal' },
         { value: "state", text: 'State' },
       ],
-      institutions: []
+      institutions: [],
+      total: "",
     }
   },
   methods: {
@@ -353,6 +366,7 @@ export default {
         this.institutions = response.data.data.data
         this.perPage = response.data.data.perPage
         this.currentPage = response.data.data.page
+        this.total = response.data.data.total
       })
     }
   },
@@ -363,7 +377,12 @@ export default {
 
 </script>
 
+
 <style scoped>
+.applyBtn {
+  border-radius: 38px;
+  background: #03913f;
+}
 #institution {
   width: 100%;
   background: #f6f5fd;
