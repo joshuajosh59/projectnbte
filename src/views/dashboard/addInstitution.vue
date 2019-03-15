@@ -279,6 +279,10 @@ export default {
 select {
   height: 60px;
   margin-bottom: 40px;
+  border: 2px solid #03913f;
+}
+.addNewInstitution textarea {
+  border: 2px solid #03913f;
 }
 .addNewInstitution .seperator {
   margin: 2rem 0px 2rem 0px;
@@ -291,7 +295,7 @@ select {
 }
 #institution {
   width: 100%;
-  background: #f6f5fd;
+  background: white;
   padding: 20px;
 }
 .dropdown a {

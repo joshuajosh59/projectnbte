@@ -3,7 +3,7 @@
     <b-row>
       <div class="top-display">
         <b style="margin-left: 10px; font-size: 20px" class="montserrat">Ranking Criteria</b>
-        <b-btn class="buttons">Add Criteria</b-btn>
+        <b-btn class="buttons" v-b-modal.modal1>Add Criteria</b-btn>
       </div>
     </b-row>
     <br>
@@ -67,7 +67,7 @@
           </tbody>
         </table>
       </div>
-      <b-row>
+      <!-- <b-row>
         <b-col md="2">
           <b-form-select v-model="action" style="border-radius: 38px" :options="options"/>
         </b-col>
@@ -75,20 +75,56 @@
           <b-btn class="applyBtn">Apply</b-btn>
         </b-col>
         <b-col md="4"></b-col>
-      </b-row>
+      </b-row>-->
     </div>
+    <b-modal
+      id="modal1"
+      ok-only
+      ok-variant="success"
+      centered
+      ok-title="Add"
+      @ok="addCriteria"
+      title="Add Criteria"
+    >
+      <b-row>
+        <b-col md="6">
+          <b-form-group label="Name" label-for="name" label-align="center">
+            <b-form-input
+              id="name"
+              type="text"
+              v-model="name"
+              required
+              placeholder="Enter Criteria Name"
+            />
+          </b-form-group>
+        </b-col>
+        <b-col md="6">
+          <b-form-group label="Weigth" label-for="weigth" label-align="center">
+            <b-form-input
+              id="weigth"
+              type="number"
+              v-model="weigth"
+              required
+              placeholder="Enter Criteria Weigth"
+            />
+          </b-form-group>
+        </b-col>
+      </b-row>
+    </b-modal>
   </div>
 </template>
 
 <script>
-import { url } from '@/config.js'
+import { url, getHeader } from '@/config.js'
 
 export default {
   data() {
     return {
       selected: [],
       selectAll: false,
-      criteria: []
+      criteria: [],
+      name: '',
+      weigth: '',
     }
   },
   methods: {
@@ -99,6 +135,19 @@ export default {
           this.selected.push(this.items[i].id);
         }
       }
+    },
+    addCriteria() {
+      const { name, weigth } = this;
+      this.$http.post(url + 'criteria', { name, 'weight': weigth }, { headers: getHeader() }).then((response) => {
+        if (response.data.success) {
+          this.$swal({
+            type: 'success',
+            title: 'Sucess',
+            text: 'Criteria added successfully',
+            timer: 2000,
+          });
+        }
+      })
     },
     getCriteria: function () {
       this.$http.get(url + 'criteria?page=1&size=10').then((response) => {

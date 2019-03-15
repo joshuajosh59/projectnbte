@@ -13,10 +13,10 @@
             <p>All({{this.total}})</p>
           </div>
           <div class="top-display-items border-line green">
-            <p>Ranked (2)</p>
+            <p>Ranked ({{this.ranked}})</p>
           </div>
           <div class="top-display-items green">
-            <p>Unranked (6)</p>
+            <p>Unranked ({{this.unranked}})</p>
           </div>
           <br>
           <br>
@@ -137,6 +137,8 @@ export default {
       selectAll: false,
       institutions: [],
       total: "",
+      ranked: "",
+      unranked: "",
     }
   },
   methods: {
@@ -165,6 +167,8 @@ export default {
         this.perPage = response.data.data.perPage
         this.currentPage = response.data.data.page
         this.total = response.data.data.total
+        this.ranked = response.data.data.data.filter(i => i.rank > 0).length
+        this.unranked = response.data.data.data.filter(i => i.rank <= 0).length
       })
     }
   },
