@@ -74,7 +74,8 @@
                 <td>{{formatDate(i.created_at)}}</td>
                 <td>{{i.about}}</td>
                 <td>
-                  <b-btn @click="rankIns(i.id)" class="buttons">Rank</b-btn>
+                  <b-btn v-if="i.rank > 0" disabled="true" class="buttons">Rank</b-btn>
+                  <b-btn v-else @click="rankIns(i.id)" class="buttons">Rank</b-btn>
                 </td>
                 <!-- <td>
                   <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/>
@@ -109,7 +110,7 @@
       v-model="currentPage"
       :per-page="perPage"
     />
-    <b-row>
+    <!-- <b-row>
       <b-col md="2">
         <b-form-select v-model="action" style="border-radius: 38px" :options="options"/>
       </b-col>
@@ -117,7 +118,7 @@
         <b-btn class="applyBtn">Apply</b-btn>
       </b-col>
       <b-col md="4"></b-col>
-    </b-row>
+    </b-row>-->
   </div>
 </template>
 

@@ -15,7 +15,7 @@
           <div class="top-display-items">
             <p>All({{this.total}})</p>
           </div>
-          <!-- <div class="top-display-items border-line green">
+          <div class="top-display-items border-line green">
             <p>Mine (8)</p>
           </div>
           <div class="top-display-items border-line green">
@@ -23,7 +23,7 @@
           </div>
           <div class="top-display-items green">
             <p>Draft</p>
-          </div>-->
+          </div>
           <br>
           <br>
         </div>
@@ -222,13 +222,13 @@
       </div>
     </b-modal>
     <b-row>
-      <b-col md="2">
-        <b-form-select v-model="action" style="border-radius: 38px" :options="options"/>
+      <b-col md="3">
+        <b-form-select v-model="action" style="border-radius: 38px" :options="optn"/>
       </b-col>
       <b-col md="4">
-        <b-btn class="applyBtn">Apply</b-btn>
+        <b-btn class="applyBtn" @click="performBulkActions(action)">Apply</b-btn>
       </b-col>
-      <b-col md="4"></b-col>
+      <b-col md="5"></b-col>
     </b-row>
     <b-pagination
       style="margin-top:20px"
@@ -250,7 +250,7 @@ export default {
       currentPage: null,
       lastPage: null,
       perPage: null,
-      action: '',
+      action: null,
       items: [
         { id: '1', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/12/2019', notes: 'The universe is a big place, perherps the biggest...' },
         { id: '2', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/13/2019', notes: 'The universe is a big place, perherps the biggest...' },
@@ -293,27 +293,43 @@ export default {
         instagram: "",
         ownership: null,
         location: "",
-        website: ""
+        website: "",
+        action: null,
       },
       optn: [{ value: null, text: 'Bulk Actions' },
       { value: "delete", text: 'Delete' },],
       options: [
         { value: null, text: 'Choose Category' },
-        { value: "university", text: 'University' },
-        { value: "polytechnic", text: 'Polytechnic' },
-        { value: "COE", text: 'College of  Education' },
+        { value: "Polytechnic", text: 'Polytechnic' },
+        { value: "College of Education", text: 'College of Education' },
+        { value: "College of Agriculture", text: 'College of Agriculture' },
+        { value: "College of Health", text: 'College of Health' },
       ],
       options1: [
         { value: null, text: 'Choose Ownership' },
-        { value: "private", text: 'Private' },
-        { value: "federal", text: 'Federal' },
-        { value: "state", text: 'State' },
+        { value: "Federal Government Owned", text: 'Federal Government Owned' },
+        { value: "State Government Owned", text: 'State Government Owned' },
+        { value: "Private", text: 'Private' },
       ],
+      states: ["Abia", "Adamawa", "Anambra", "Akwa Ibom", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta", "Ebonyi", "Enugu", "Edo", "Ekiti", "FCT", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"],
       institutions: [],
       total: "",
     }
   },
   methods: {
+    performBulkActions(type) {
+      if (type === 'delete') {
+        for (let i = 0; i < this.selected.length; i++) {
+          this.deleteInstitution(this.selected[i].id);
+        }
+        this.$swal({
+          type: 'success',
+          title: 'Sucess',
+          text: 'Institutions deleted successfully',
+          timer: 2000,
+        });
+      }
+    },
     select() {
       this.selected = [];
       if (!this.selectAll) {

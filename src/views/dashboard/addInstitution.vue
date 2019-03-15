@@ -91,13 +91,20 @@
           </b-col>
           <b-col md="4">
             <b-form-group label="Year of Establishment" label-for="address" label-align="center">
-              <b-form-input
+              <!-- <b-form-input
                 id="address"
                 type="text"
                 v-model="schoolInfo.year_established"
                 required
                 placeholder="Enter Address.."
-              />
+              />-->
+              <date-picker
+                v-model="schoolInfo.year_established"
+                type="year"
+                lang="en"
+                placeholder="Select Year"
+                heigth="100"
+              ></date-picker>
             </b-form-group>
           </b-col>
         </b-row>
@@ -196,9 +203,11 @@
 </template>
 
 <script>
-import { getHeader, url } from '@/config.js'
+import { getHeader, url } from '@/config.js';
+import DatePicker from 'vue2-datepicker';
 
 export default {
+  components: { DatePicker },
   data() {
     return {
       schoolInfo: {
@@ -252,6 +261,12 @@ export default {
 }
 
 </script>
+<style>
+.mx-input {
+  height: 60px;
+}
+</style>
+
 <style scoped>
 .addNewInstitution label {
   font-weight: 900;

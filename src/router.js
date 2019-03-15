@@ -10,7 +10,7 @@ import rankInstitutionComponent from './views/dashboard/rankInstitution.vue';
 import criteriaComponent from './views/dashboard/criteria.vue';
 import usersComponent from './views/dashboard/user.vue';
 import addInstitution from './views/dashboard/addInstitution.vue';
-import { authGuard } from './util';
+import { authGuard, loginAuth } from './util';
 
 Vue.use(Router);
 
@@ -25,6 +25,7 @@ export default new Router({
       children: [
         {
           path: '/login',
+          beforeEnter: loginAuth,
           component: loginComponent,
         },
       ],
