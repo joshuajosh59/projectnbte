@@ -79,6 +79,15 @@
           </tbody>
         </table>
       </div>
+      <b-row>
+        <b-col md="2">
+          <b-form-select v-model="action" style="border-radius: 38px" :options="options"/>
+        </b-col>
+        <b-col md="4">
+          <b-btn class="applyBtn">Apply</b-btn>
+        </b-col>
+        <b-col md="4"></b-col>
+      </b-row>
     </div>
   </div>
 </template>
@@ -115,6 +124,10 @@ export default {
 </script>
 
 <style scoped>
+.applyBtn {
+  border-radius: 38px;
+  background: #03913f;
+}
 #news {
   width: 100%;
   background: #f6f5fd;

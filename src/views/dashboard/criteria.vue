@@ -35,76 +35,88 @@
       </b-col>
     </b-row>
     <div style="margin-top: 20px; color: #333333; font-size: 15px; font-family: montserrat">
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>
-                            <label class="form-checkbox">
-                                <input type="checkbox" v-model="selectAll" @click="select">
-                                <i class="form-icon"></i>
-                            </label>
-                        </th>
-                        <th>Number</th>
-                        <th>Name</th>
-                        <th>Weight</th>
-                        <th>Last Updated</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="i in criteria" :key="i.id">
-                        <td>
-                            <label class="form-checkbox">
-                                <input type="checkbox" :value="i.id" v-model="selected">
-                                <i class="form-icon"></i>
-                            </label>
-                        </td>
-                        <td>{{i.id}}</td>
-                        <td>{{i.name}}</td>
-                        <td>{{i.weight}}</td>
-                        <td>{{i.updated_at}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>
+                <label class="form-checkbox">
+                  <input type="checkbox" v-model="selectAll" @click="select">
+                  <i class="form-icon"></i>
+                </label>
+              </th>
+              <th>Number</th>
+              <th>Name</th>
+              <th>Weight</th>
+              <th>Last Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="i in criteria" :key="i.id">
+              <td>
+                <label class="form-checkbox">
+                  <input type="checkbox" :value="i.id" v-model="selected">
+                  <i class="form-icon"></i>
+                </label>
+              </td>
+              <td>{{i.id}}</td>
+              <td>{{i.name}}</td>
+              <td>{{i.weight}}</td>
+              <td>{{i.updated_at}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <b-row>
+        <b-col md="2">
+          <b-form-select v-model="action" style="border-radius: 38px" :options="options"/>
+        </b-col>
+        <b-col md="4">
+          <b-btn class="applyBtn">Apply</b-btn>
+        </b-col>
+        <b-col md="4"></b-col>
+      </b-row>
     </div>
-    </div>
+  </div>
 </template>
 
 <script>
 import { url } from '@/config.js'
 
 export default {
-    data() {
-        return {
-            selected: [],
-            selectAll: false,
-            criteria: []
-        }
-    },
-    methods:{ 
-        select() {
-            this.selected = [];
-            if (!this.selectAll) {
-                for (let i in this.items) {
-                    this.selected.push(this.items[i].id);
-                }
-            }
-        },
-        getCriteria: function () {
-            this.$http.get( url + 'criteria?page=1&size=10').then((response) => {
-                console.log(response.data.data.data)
-                this.criteria = response.data.data.data
-            })
-        }
-    },
-    created(){
-        this.getCriteria()
+  data() {
+    return {
+      selected: [],
+      selectAll: false,
+      criteria: []
     }
+  },
+  methods: {
+    select() {
+      this.selected = [];
+      if (!this.selectAll) {
+        for (let i in this.items) {
+          this.selected.push(this.items[i].id);
+        }
+      }
+    },
+    getCriteria: function () {
+      this.$http.get(url + 'criteria?page=1&size=10').then((response) => {
+        this.criteria = response.data.data.data
+      })
+    }
+  },
+  created() {
+    this.getCriteria()
+  }
 }
 </script>
 
 <style scoped>
+.applyBtn {
+  border-radius: 38px;
+  background: #03913f;
+}
 #criteria {
   width: 100%;
   background: #f6f5fd;

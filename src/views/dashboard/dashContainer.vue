@@ -78,6 +78,16 @@
             />
             <span class="span">Programme</span>
           </li>
+          <router-link class="news" @click="makeActive('rank')" to="/rank">
+            <li class="list-link">
+              <font-awesome-icon
+                style="color: white; padding-top: 10px; padding-right: 15px;"
+                :icon="['far', 'bell']"
+                size="2x"
+              />
+              <span class="span">Rank</span>
+            </li>
+          </router-link>
           <router-link class="news" @click="makeActive('news')" to="/news">
             <li class="list-link">
               <font-awesome-icon
