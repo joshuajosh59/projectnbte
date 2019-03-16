@@ -111,6 +111,14 @@
         </b-col>
       </b-row>
     </b-modal>
+    <b-pagination
+      style="margin-top:20px"
+      size="md"
+      :total-rows="totalPage"
+      v-model="currentPage"
+      :per-page="perPage"
+      @change="handlePageChange"
+    />
   </div>
 </template>
 
@@ -125,6 +133,9 @@ export default {
       criteria: [],
       name: '',
       weigth: '',
+      totalPage: 20,
+      perPage: 10,
+      currentPage: 1,
     }
   },
   methods: {
@@ -149,9 +160,15 @@ export default {
         }
       })
     },
-    getCriteria: function () {
-      this.$http.get(url + 'criteria?page=1&size=10').then((response) => {
-        this.criteria = response.data.data.data
+    handlePageChange(next) {
+      this.getCriteria(next);
+    },
+    getCriteria(next = 1) {
+      this.$http.get(url + `criteria?page=${next}&size=10`).then((response) => {
+        this.criteria = response.data.data.data;
+        this.totalPage = response.data.data.total;
+        this.perPage = response.data.data.perPage;
+        this.currentPage = response.data.data.page;
       })
     }
   },

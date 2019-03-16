@@ -15,15 +15,6 @@
           <div class="top-display-items">
             <p>All({{this.total}})</p>
           </div>
-          <div class="top-display-items border-line green">
-            <p>Mine (8)</p>
-          </div>
-          <div class="top-display-items border-line green">
-            <p>Published (10)</p>
-          </div>
-          <div class="top-display-items green">
-            <p>Draft</p>
-          </div>
           <br>
           <br>
         </div>

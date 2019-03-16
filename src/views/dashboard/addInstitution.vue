@@ -90,7 +90,7 @@
             </b-form-group>
           </b-col>
           <b-col md="4">
-            <b-form-group label="Year of Establishment" label-for="address" label-align="center">
+            <b-form-group label="Year of Establishment" label-for="address">
               <!-- <b-form-input
                 id="address"
                 type="text"
@@ -161,7 +161,7 @@
                 type="text"
                 v-model="schoolInfo.facebook"
                 required
-                placeholder="Enter Facebook username..."
+                placeholder="Enter Facebook Username..."
               />
             </b-form-group>
           </b-col>
@@ -188,7 +188,63 @@
             </b-form-group>
           </b-col>
         </b-row>
-
+        <b-row>
+          <b-col md="12">
+            <h6 class="seperator">Programmes</h6>
+          </b-col>
+        </b-row>
+        <b-row v-for="programme in schoolInfo.programmes" :key="programme.name">
+          <b-col md="4">
+            <b-form-group label="Name" label-for="pName" label-align="center">
+              <b-form-input
+                id="pName"
+                v-model="programme.name"
+                type="text"
+                required
+                placeholder="Enter Programme name"
+              />
+            </b-form-group>
+          </b-col>
+          <b-col md="2">
+            <b-form-group label="Mode" label-for="mode" label-align="center">
+              <b-form-select v-model="programme.mode" :options="mode"/>
+            </b-form-group>
+          </b-col>
+          <b-col md="2">
+            <b-form-group label="Type" label-for="type" label-align="center">
+              <b-form-select v-model="programme.type" :options="type"/>
+            </b-form-group>
+          </b-col>
+          <b-col md="2">
+            <b-form-group label="Female" label-for="fm" label-align="center">
+              <b-form-input
+                id="fm"
+                type="number"
+                v-model="programme.female"
+                required
+                placeholder="Total Female"
+              />
+            </b-form-group>
+          </b-col>
+          <b-col md="2">
+            <b-form-group label="Male" label-for="ml" label-align="center">
+              <b-form-input
+                id="ml"
+                type="text"
+                v-model="programme.male"
+                required
+                placeholder="Total Male"
+              />
+            </b-form-group>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col md="5">
+            <b-btn class="newButton" @click="addProgramme">Add New Programme</b-btn>
+          </b-col>
+          <b-col md="4"></b-col>
+          <b-col md="5"></b-col>
+        </b-row>
         <b-row>
           <b-col md="3"></b-col>
           <b-col md="4">
@@ -224,7 +280,16 @@ export default {
         instagram: "",
         ownership: null,
         location: "",
-        website: ""
+        website: "",
+        programmes: [
+          {
+            name: "",
+            mode: null,
+            type: null,
+            female: "",
+            male: "",
+          }
+        ],
       },
       options: [
         { value: null, text: 'Choose Category' },
@@ -233,6 +298,8 @@ export default {
         { value: "College of Agriculture", text: 'College of Agriculture' },
         { value: "College of Health", text: 'College of Health' },
       ],
+      mode: [{ value: null, text: 'Choose Mode' }, { value: 'Fulltime', text: 'Fulltime' }, { value: 'Parttime', text: 'Parttime' }],
+      type: [{ value: null, text: 'Choose Type' }, { value: 'ND1', text: 'ND1' }, { value: 'ND2', text: 'ND2' }, { value: 'HND1', text: 'HND1' }, { value: 'HND2', text: 'HND2' }],
       options1: [
         { value: null, text: 'Choose Ownership' },
         { value: "Federal Government Owned", text: 'Federal Government Owned' },
@@ -257,6 +324,15 @@ export default {
         }
       })
     },
+    addProgramme() {
+      this.schoolInfo.programmes.push({
+        name: "",
+        mode: null,
+        type: null,
+        female: "",
+        male: "",
+      });
+    }
   },
 }
 
@@ -264,6 +340,7 @@ export default {
 <style>
 .mx-input {
   height: 60px;
+  border: 2px solid #03913f;
 }
 </style>
 
