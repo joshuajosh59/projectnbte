@@ -3,7 +3,7 @@
     <b-row>
       <div class="top-display">
         <b style="margin-left: 10px; font-size: 20px" class="montserrat">Ranking Criteria</b>
-        <b-btn class="buttons" v-b-modal.modal1>Add Criteria</b-btn>
+        <b-btn class="buttons" @click="gotoAddCriteria">Add Criteria</b-btn>
       </div>
     </b-row>
     <br>
@@ -146,6 +146,9 @@ export default {
           this.selected.push(this.items[i].id);
         }
       }
+    },
+    gotoAddCriteria() {
+      this.$router.push('/addcriteria');
     },
     addCriteria() {
       const { name, weigth } = this;
