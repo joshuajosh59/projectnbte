@@ -2,7 +2,7 @@
   <div id="institution">
     <b-row>
       <div class="top-display">
-        <b style="margin-left: 10px; font-size: 20px" class="montserrat">Add Institution</b>
+        <b style="margin-left: 10px; font-size: 20px" class="montserrat">Add News</b>
         <!-- <b-btn class="buttons" v-b-modal.modal1>
           <font-awesome-icon style="margin-right: 3px" :icon="['fas', 'user-plus']"/>Add Institution
         </b-btn>-->
