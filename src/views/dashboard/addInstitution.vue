@@ -196,13 +196,14 @@
         <b-row v-for="programme in schoolInfo.programmes" :key="programme.name">
           <b-col md="4">
             <b-form-group label="Name" label-for="pName" label-align="center">
-              <b-form-input
+              <multiselect maxHeight="10" optionHeight="10" v-model="programme.name" :options="opt"></multiselect>
+              <!-- <b-form-input
                 id="pName"
                 v-model="programme.name"
                 type="text"
                 required
                 placeholder="Enter Programme name"
-              />
+              />-->
             </b-form-group>
           </b-col>
           <b-col md="2">
@@ -261,9 +262,10 @@
 <script>
 import { getHeader, url } from '@/config.js';
 import DatePicker from 'vue2-datepicker';
+import Multiselect from 'vue-multiselect';
 
 export default {
-  components: { DatePicker },
+  components: { DatePicker, Multiselect },
   data() {
     return {
       schoolInfo: {
@@ -291,6 +293,7 @@ export default {
           }
         ],
       },
+      opt: [],
       options: [
         { value: null, text: 'Choose Category' },
         { value: "Polytechnic", text: 'Polytechnic' },
@@ -331,11 +334,23 @@ export default {
         female: "",
         male: "",
       });
-    }
+    },
+    getPrograms() {
+      this.$http.get(url + `programs?page=1&size=20`, { headers: getHeader() }).then((response) => {
+        let c = response.data.data.data;
+        for (let i = 0; i < c.length; i++) {
+          this.opt.push(c[i].name);
+        }
+      })
+    },
   },
+  created() {
+    this.getPrograms();
+  }
 }
 
 </script>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style>
 .mx-input {
   height: 60px;
