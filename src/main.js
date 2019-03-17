@@ -25,6 +25,7 @@ import {
   faBookOpen,
   faListAlt,
   faUserPlus,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { faBell, faNewspaper } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -54,6 +55,7 @@ library.add(
   faUniversity,
   faListAlt,
   faBookOpen,
+  faPlus,
   faNewspaper
 );
 

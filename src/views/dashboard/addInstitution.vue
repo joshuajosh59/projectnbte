@@ -319,7 +319,6 @@ export default {
             text: 'Institution added successfully',
             timer: 2000,
           });
-          // this.$forceUpdate();
           this.$router.push('/institution');
         }
       })

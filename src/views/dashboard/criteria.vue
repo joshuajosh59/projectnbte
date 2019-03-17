@@ -3,7 +3,9 @@
     <b-row>
       <div class="top-display">
         <b style="margin-left: 10px; font-size: 20px" class="montserrat">Ranking Criteria</b>
-        <b-btn class="buttons" @click="gotoAddCriteria">Add Criteria</b-btn>
+        <b-btn class="buttons" @click="gotoAddCriteria">
+          <font-awesome-icon style="margin-right: 3px" :icon="['fas', 'plus']"/>Add Criteria
+        </b-btn>
       </div>
     </b-row>
     <br>

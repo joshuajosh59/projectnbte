@@ -70,14 +70,26 @@
               <span class="span">Criteria</span>
             </li>
           </router-link>
-          <li class="list-link">
-            <font-awesome-icon
-              style="color: white; padding-top: 10px; padding-right: 15px;"
-              :icon="['fas', 'book-open']"
-              size="2x"
-            />
-            <span class="span">Programme</span>
-          </li>
+          <router-link class="criteria" @click="makeActive('criteria')" to="/webometrics">
+            <li class="list-link">
+              <font-awesome-icon
+                style="color: white; padding-top: 10px; padding-right: 15px;"
+                :icon="['fas', 'list-alt']"
+                size="2x"
+              />
+              <span class="span">Webometrics</span>
+            </li>
+          </router-link>
+          <router-link class="news" @click="makeActive('programmes')" to="/programmes">
+            <li class="list-link">
+              <font-awesome-icon
+                style="color: white; padding-top: 10px; padding-right: 15px;"
+                :icon="['fas', 'plus']"
+                size="2x"
+              />
+              <span class="span">Programme</span>
+            </li>
+          </router-link>
           <router-link class="news" @click="makeActive('rank')" to="/rank">
             <li class="list-link">
               <font-awesome-icon
@@ -92,7 +104,7 @@
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
-                :icon="['far', 'bell']"
+                :icon="['far', 'newspaper']"
                 size="2x"
               />
               <span class="span">News</span>
@@ -108,14 +120,16 @@
               <span class="span">Users</span>
             </li>
           </router-link>
-          <li class="list-link">
-            <font-awesome-icon
-              style="color: white; padding-top: 10px; padding-right: 15px;"
-              :icon="['fas', 'user-tie']"
-              size="2x"
-            />
-            <span class="span">Staff</span>
-          </li>
+          <router-link class="users" @click="makeActive('users')" to="/staff">
+            <li class="list-link">
+              <font-awesome-icon
+                style="color: white; padding-top: 10px; padding-right: 15px;"
+                :icon="['fas', 'user-tie']"
+                size="2x"
+              />
+              <span class="span">Staff</span>
+            </li>
+          </router-link>
           <li class="list-link">
             <font-awesome-icon
               style="color: white; padding-top: 10px; padding-right: 15px;"
