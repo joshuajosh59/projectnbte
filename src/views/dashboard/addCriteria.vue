@@ -2,102 +2,99 @@
   <div id="institution">
     <b-row>
       <div class="top-display">
-        <b style="margin-left: 10px; font-size: 20px" class="montserrat">Rank Institution</b>
+        <b style="margin-left: 10px; font-size: 20px" class="montserrat">Add Criteria</b>
       </div>
     </b-row>
     <br>
-    <b-row>
-      <b-col md="6"></b-col>
-      <b-col md="6">
-        <div style="display: flex">
-          <div style="flex-grow: 1; width: 350px; margin-left: 40px">
-            <input placeholder="Search" class="form-control mx-auto" type="text">
-          </div>
-          <div style="flex-grow: 1; width: 350px; margin-top: 10px">
-            <b-btn class="buttons" style="padding: 8px 40px">Search</b-btn>
-          </div>
-        </div>
-      </b-col>
-    </b-row>
-    <div style="margin-top: 20px; color: #333333; font-size: 15px; font-family: montserrat">
-      <b-form class="addNewInstitution" @submit.prevent="rankInstitution">
+    <div style="margin-top: 20px;color: #333333; font-size: 15px; font-family: montserrat">
+      <b-form @submit.prevent="addCriteria">
+        <b-form-group label="Name" label-for="name" label-align="center">
+          <b-form-input
+            id="name"
+            type="text"
+            v-model="name"
+            required
+            placeholder="Enter Criteria Name"
+          />
+        </b-form-group>
+        <b-form-group label="Weigth" label-for="weigth" label-align="center">
+          <b-form-input
+            id="weigth"
+            type="number"
+            v-model="weigth"
+            required
+            placeholder="Enter Criteria Weigth"
+          />
+        </b-form-group>
         <b-row>
-          <b-col md="6" v-for="(c) in criteria" :key="c.id">
-            <b-form-group :label="c.name">
-              <b-form-input v-model="c.score" type="number" :min="0" :max="5" required/>
-            </b-form-group>
-          </b-col>
-        </b-row>
-        <b-row>
+          <b-col md="4"></b-col>
           <b-col md="4">
-            <b-btn class="newButton" type="submit">Rank</b-btn>
+            <b-btn class="newButton" type="submit">Add</b-btn>
           </b-col>
+          <b-col md="4"></b-col>
         </b-row>
       </b-form>
     </div>
+    <!-- </b-col>
+    </b-row>-->
   </div>
 </template>
 
 <script>
 import { getHeader, url } from '@/config.js';
+import DatePicker from 'vue2-datepicker';
 
 export default {
+  components: { DatePicker },
   data() {
     return {
-      id: this.$route.params.Id,
-      criterias: [],
-      criteria: [
-
-      ],
+      name: '',
+      weigth: '',
     }
   },
   methods: {
-    rankInstitution() {
-      const { criteria } = this;
-      let newobj = criteria.map(item => {
-        return ({ 'criterion_id': item.criterion_id, 'score': item.score });
-      });
-      let object = {
-        "criteria": newobj
-      }
-      this.$http.post(url + `institution/${this.id}/criteria`, object, { headers: getHeader() }).then((response) => {
+    addCriteria() {
+      const { name, weigth } = this;
+      this.$http.post(url + 'criteria', { name, 'weight': weigth }, { headers: getHeader() }).then((response) => {
         if (response.data.success) {
           this.$swal({
             type: 'success',
             title: 'Sucess',
-            text: 'Institution ranked successfully',
-            timer: 3000,
+            text: 'Criteria added successfully',
+            timer: 2000,
           });
-          this.$router.push('/rank');
-        }
-      })
-    },
-    getCriteria() {
-      this.$http.get(url + `criteria?page=1&size=50`).then((response) => {
-        this.criterias = response.data.data.data;
-        let c = response.data.data.data;
-        for (let i = 0; i < c.length; i++) {
-          this.criteria.push({
-            "criterion_id": c[i].id,
-            "score": c[i].weigth,
-            "name": c[i].name,
-          })
         }
       })
     },
   },
-  created() {
-    this.getCriteria();
-  }
 }
 
 </script>
+<style>
+.mx-input {
+  height: 60px;
+}
+.main {
+  width: 100%;
+}
+</style>
+
+<style scoped>
+.addNewInstitution label {
+  font-weight: 900;
+  font-size: 16px;
+}
+</style>
 
 <style scoped>
 .addNewInstitution input,
 select {
   height: 60px;
   margin-bottom: 40px;
+  border: 2px solid #03913f;
+}
+.addNewInstitution textarea {
+  border: 2px solid #03913f;
 }
 .addNewInstitution .seperator {
   margin: 2rem 0px 2rem 0px;
@@ -105,9 +102,12 @@ select {
   font-weight: 900;
   font-size: 25px;
 }
+.form-group label {
+  font-size: 200px !important;
+}
 #institution {
   width: 100%;
-  background: #f6f5fd;
+  background: white;
   padding: 20px;
 }
 .dropdown a {

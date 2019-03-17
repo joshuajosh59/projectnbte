@@ -13,23 +13,13 @@
             <p>All({{this.total}})</p>
           </div>
           <div class="top-display-items border-line green">
-            <p>Ranked (2)</p>
+            <p>Ranked ({{this.ranked}})</p>
           </div>
           <div class="top-display-items green">
-            <p>Unranked (6)</p>
+            <p>Unranked ({{this.unranked}})</p>
           </div>
           <br>
           <br>
-        </div>
-      </b-col>
-      <b-col md="6">
-        <div style="display: flex">
-          <div style="flex-grow: 1; width: 350px; margin-left: 40px">
-            <input placeholder="Search" class="form-control mx-auto" type="text">
-          </div>
-          <div style="flex-grow: 1; width: 350px; margin-top: 10px">
-            <b-btn class="buttons" style="padding: 8px 40px">Search</b-btn>
-          </div>
         </div>
       </b-col>
     </b-row>
@@ -74,7 +64,8 @@
                 <td>{{formatDate(i.created_at)}}</td>
                 <td>{{i.about}}</td>
                 <td>
-                  <b-btn @click="rankIns(i.id)" class="buttons">Rank</b-btn>
+                  <b-btn v-if="i.rank > 0" disabled="true" class="buttons">Rank</b-btn>
+                  <b-btn v-else @click="rankIns(i.id)" class="buttons">Rank</b-btn>
                 </td>
                 <!-- <td>
                   <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/>
@@ -109,7 +100,7 @@
       v-model="currentPage"
       :per-page="perPage"
     />
-    <b-row>
+    <!-- <b-row>
       <b-col md="2">
         <b-form-select v-model="action" style="border-radius: 38px" :options="options"/>
       </b-col>
@@ -117,7 +108,7 @@
         <b-btn class="applyBtn">Apply</b-btn>
       </b-col>
       <b-col md="4"></b-col>
-    </b-row>
+    </b-row>-->
   </div>
 </template>
 
@@ -136,6 +127,8 @@ export default {
       selectAll: false,
       institutions: [],
       total: "",
+      ranked: "",
+      unranked: "",
     }
   },
   methods: {
@@ -164,6 +157,8 @@ export default {
         this.perPage = response.data.data.perPage
         this.currentPage = response.data.data.page
         this.total = response.data.data.total
+        this.ranked = response.data.data.data.filter(i => i.rank > 0).length
+        this.unranked = response.data.data.data.filter(i => i.rank <= 0).length
       })
     }
   },

@@ -25,8 +25,9 @@ import {
   faBookOpen,
   faListAlt,
   faUserPlus,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
-import { faBell } from '@fortawesome/free-regular-svg-icons';
+import { faBell, faNewspaper } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -53,7 +54,9 @@ library.add(
   faThLarge,
   faUniversity,
   faListAlt,
-  faBookOpen
+  faBookOpen,
+  faPlus,
+  faNewspaper
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);

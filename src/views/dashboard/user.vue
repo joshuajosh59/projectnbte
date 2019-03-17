@@ -3,7 +3,9 @@
     <b-row>
       <div class="top-display">
         <b style="margin-left: 10px; font-size: 20px" class="montserrat">Users</b>
-        <b-btn class="buttons">Add User</b-btn>
+        <b-btn class="buttons">
+          <font-awesome-icon style="margin-right: 3px" :icon="['fas', 'plus']"/>Add User
+        </b-btn>
       </div>
     </b-row>
     <br>
