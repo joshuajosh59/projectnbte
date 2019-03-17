@@ -242,16 +242,6 @@ export default {
       lastPage: null,
       perPage: null,
       action: null,
-      items: [
-        { id: '1', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/12/2019', notes: 'The universe is a big place, perherps the biggest...' },
-        { id: '2', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/13/2019', notes: 'The universe is a big place, perherps the biggest...' },
-        { id: '3', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/14/2019', notes: 'The universe is a big place, perherps the biggest...' },
-        { id: '4', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/15/2019', notes: 'The universe is a big place, perherps the biggest...' },
-        { id: '5', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/16/2019', notes: 'The universe is a big place, perherps the biggest...' },
-        { id: '3', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/14/2019', notes: 'The universe is a big place, perherps the biggest...' },
-        { id: '4', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/15/2019', notes: 'The universe is a big place, perherps the biggest...' },
-        { id: '5', number: '119', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/16/2019', notes: 'The universe is a big place, perherps the biggest...' },
-      ],
       selected: [],
       selectAll: false,
       editSchool: {
@@ -311,7 +301,7 @@ export default {
     performBulkActions(type) {
       if (type === 'delete') {
         for (let i = 0; i < this.selected.length; i++) {
-          this.deleteInstitution(this.selected[i].id);
+          this.deleteInstitution(this.selected[i]);
         }
         this.$swal({
           type: 'success',
@@ -324,8 +314,8 @@ export default {
     select() {
       this.selected = [];
       if (!this.selectAll) {
-        for (let i in this.items) {
-          this.selected.push(this.items[i].id);
+        for (let i in this.institutions) {
+          this.selected.push(this.institutions[i].id);
         }
       }
     },

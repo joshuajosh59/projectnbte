@@ -11,6 +11,7 @@ import criteriaComponent from './views/dashboard/criteria.vue';
 import usersComponent from './views/dashboard/user.vue';
 import addInstitution from './views/dashboard/addInstitution.vue';
 import addCriteria from './views/dashboard/addCriteria.vue';
+import addNews from './views/dashboard/addNews.vue';
 import { authGuard, loginAuth } from './util';
 
 Vue.use(Router);
@@ -59,6 +60,11 @@ export default new Router({
           path: '/addnew',
           beforeEnter: authGuard,
           component: addInstitution,
+        },
+        {
+          path: '/addnews',
+          beforeEnter: authGuard,
+          component: addNews,
         },
         {
           path: '/addcriteria',

@@ -3,7 +3,9 @@
     <b-row>
       <div class="top-display">
         <b style="margin-left: 10px; font-size: 20px" class="montserrat">News</b>
-        <b-btn class="buttons">Add News</b-btn>
+        <b-btn class="buttons" @click="openForm">
+          <font-awesome-icon style="margin-right: 3px" :icon="['fa', 'book-open']"/>Add News
+        </b-btn>
       </div>
     </b-row>
     <br>
@@ -11,29 +13,19 @@
       <b-col md="6">
         <div class="top-display" style="margin-top: 10px">
           <div class="top-display-items">
-            <p>All(11)</p>
+            <p>All({{this.total}})</p>
           </div>
           <div class="top-display-items border-line green">
-            <p>Mine (8)</p>
+            <p>Mine ({{this.published}})</p>
           </div>
           <div class="top-display-items border-line green">
-            <p>Published (10)</p>
+            <p>Published ({{this.published}})</p>
           </div>
           <div class="top-display-items green">
-            <p>Draft</p>
+            <p>Draft ({{this.draft}})</p>
           </div>
           <br>
           <br>
-        </div>
-      </b-col>
-      <b-col md="6">
-        <div style="display: flex">
-          <div style="flex-grow: 1; width: 350px; margin-left: 40px">
-            <input placeholder="Search" class="form-control mx-auto" type="text">
-          </div>
-          <div style="flex-grow: 1; width: 350px; margin-top: 10px">
-            <b-btn class="buttons" style="padding: 8px 40px">Search</b-btn>
-          </div>
         </div>
       </b-col>
     </b-row>
@@ -55,70 +47,118 @@
                   <i class="form-icon"></i>
                 </label>
               </th>
-              <th>Number</th>
-              <th>News</th>
+              <th></th>
+              <th>Title</th>
               <th>Status</th>
               <th>Last Updated</th>
               <th>Notes</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="i in items" :key="i">
+            <tr v-for="(n,i) in news" :key="n.id">
               <td>
                 <label class="form-checkbox">
-                  <input type="checkbox" :value="i.id" v-model="selected">
+                  <input type="checkbox" :value="n.id" v-model="selected">
                   <i class="form-icon"></i>
                 </label>
               </td>
-              <td>{{i.number}}</td>
-              <td>{{i.title}}</td>
-              <td>{{i.status}}</td>
-              <td>{{i.lastUpdated}}</td>
-              <td>{{i.notes}}</td>
+              <td>{{i+1}}</td>
+              <td>{{n.title}}</td>
+              <td>{{n.status}}</td>
+              <td>{{n.updated_at}}</td>
+              <td>{{n.content}}</td>
             </tr>
           </tbody>
         </table>
       </div>
+      <b-pagination
+        style="margin-top:20px"
+        size="md"
+        :total-rows="totalPage"
+        v-model="currentPage"
+        :per-page="perPage"
+        @change="handlePageChange"
+      />
       <b-row>
-        <b-col md="2">
-          <b-form-select v-model="action" style="border-radius: 38px" :options="options"/>
+        <b-col md="3">
+          <b-form-select v-model="action" style="border-radius: 38px" :options="optn"/>
         </b-col>
         <b-col md="4">
-          <b-btn class="applyBtn">Apply</b-btn>
+          <b-btn class="applyBtn" @click="performBulkActions(action)">Apply</b-btn>
         </b-col>
-        <b-col md="4"></b-col>
+        <b-col md="5"></b-col>
       </b-row>
     </div>
   </div>
 </template>
 
 <script>
+import { url, getHeader } from '@/config.js'
+
 export default {
   data() {
     return {
-      items: [
-        { id: '1', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/12/2019', notes: 'The universe is a big place, perherps the biggest...' },
-        { id: '2', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/13/2019', notes: 'The universe is a big place, perherps the biggest...' },
-        { id: '3', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/14/2019', notes: 'The universe is a big place, perherps the biggest...' },
-        { id: '4', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/15/2019', notes: 'The universe is a big place, perherps the biggest...' },
-        { id: '5', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/16/2019', notes: 'The universe is a big place, perherps the biggest...' },
-        { id: '3', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/14/2019', notes: 'The universe is a big place, perherps the biggest...' },
-        { id: '4', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/15/2019', notes: 'The universe is a big place, perherps the biggest...' },
-        { id: '5', number: '199', title: 'Kaduna Polythecnic', status: 'Published', lastUpdated: '9/16/2019', notes: 'The universe is a big place, perherps the biggest...' },
-      ],
+      news: [],
+      totalPage: '',
+      perPage: 10,
+      currentPage: 1,
+      published: '',
+      draft: '',
+      total: '',
+      optn: [{ value: null, text: 'Bulk Actions' },
+      { value: "delete", text: 'Delete' },],
       selected: [],
-      selectAll: false
+      selectAll: false,
+      action: null,
     }
   },
   methods: {
     select() {
       this.selected = [];
       if (!this.selectAll) {
-        for (let i in this.items) {
-          this.selected.push(this.items[i].id);
+        for (let i in this.news) {
+          this.selected.push(this.news[i].id);
         }
       }
+    },
+    performBulkActions(type) {
+      if (type === 'delete') {
+        for (let i = 0; i < this.selected.length; i++) {
+          this.deleteNews(this.selected[i]);
+        }
+        this.$swal({
+          type: 'success',
+          title: 'Sucess',
+          text: 'News deleted successfully',
+          timer: 2000,
+        });
+      }
+    },
+    deleteNews(id) {
+      this.$http.delete(url + `posts/${id}`, { headers: getHeader() }).then(() => {
+        this.getInstitutions();
+      })
+    },
+    openForm() {
+      this.$router.push('/addnews');
+    },
+    handlePageChange(next) {
+      this.getNews(next);
+    },
+    getNews(next) {
+      this.$http.get(url + `posts?page=${next},size=10`).then((response) => {
+        this.news = response.data.data.data;
+        this.totalPage = response.data.data.total;
+        this.perPage = response.data.data.perPage;
+        this.currentPage = response.data.data.page;
+        this.total = response.data.data.data.length;
+        this.published = response.data.data.data.filter(item => item.status === 'published').length;
+        this.draft = response.data.data.data.filter(item => item.status === 'draft').length;
+      })
     }
+  },
+  created() {
+    this.getNews();
   }
 }
 </script>

@@ -22,16 +22,6 @@
           <br>
         </div>
       </b-col>
-      <b-col md="6">
-        <div style="display: flex">
-          <div style="flex-grow: 1; width: 350px; margin-left: 40px">
-            <input placeholder="Search" class="form-control mx-auto" type="text">
-          </div>
-          <div style="flex-grow: 1; width: 350px; margin-top: 10px">
-            <b-btn class="buttons" style="padding: 8px 40px">Search</b-btn>
-          </div>
-        </div>
-      </b-col>
     </b-row>
     <div style="margin-top: 20px; color: #333333; font-size: 15px; font-family: montserrat">
       <!-- <b-table responsive striped hover :fields="fields" :items="items">
