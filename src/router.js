@@ -18,6 +18,12 @@ import programmeComponent from './views/dashboard/programmes.vue';
 import addStaff from './views/dashboard/addStaff.vue';
 import staffComponent from './views/dashboard/staff.vue';
 import webometricsComponent from './views/dashboard/webometrics.vue';
+import editInstitution from './views/dashboard/editInstitution.vue';
+import editStaff from './views/dashboard/editStaff.vue';
+import editCriteria from './views/dashboard/editCriteria.vue';
+import editNews from './views/dashboard/editNews.vue';
+import editProgrammes from './views/dashboard/editProgrammes.vue';
+import editWebometrics from './views/dashboard/editWebometrics.vue';
 import { authGuard, loginAuth } from './util';
 
 Vue.use(Router);
@@ -61,6 +67,36 @@ export default new Router({
           path: '/rankinstitution/:Id',
           beforeEnter: authGuard,
           component: rankInstitutionComponent,
+        },
+        {
+          path:'/editinstitution/:Id',
+          beforeEnter:authGuard,
+          component:editInstitution,
+        },
+        {
+          path: '/editstaff/:Id',
+          beforeEnter: authGuard,
+          component: editStaff,
+        },
+        {
+          path: '/editcriteria/:Id',
+          beforeEnter: authGuard,
+          component: editCriteria,
+        },
+        {
+          path: '/editnews/:Id',
+          beforeEnter: authGuard,
+          component: editNews,
+        },
+        {
+          path: '/editprogramme/:Id',
+          beforeEnter: authGuard,
+          component: editProgrammes,
+        },
+        {
+          path: '/editwebometrics/:Id',
+          beforeEnter: authGuard,
+          component: editWebometrics,
         },
         {
           path: '/addnew',

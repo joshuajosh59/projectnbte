@@ -49,6 +49,23 @@
               <td>{{i.name}}</td>
               <td>{{i.code}}</td>
               <td>{{i.category}}</td>
+              <td>
+                <!-- <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/> -->
+                <div class="dropdown" style="margin-left: auto; margin-right: 20px">
+                  <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/>
+                  <ul
+                    class="dropdown-menu"
+                    style="position: absolute; top: -10px; margin-left: -150px"
+                  >
+                    <li>
+                      <a style="cursor: pointer" @click="edit(i.id)">Edit</a>
+                    </li>
+                    <li>
+                      <a style="cursor: pointer" @click="deleteI(i.id)">Trash</a>
+                    </li>
+                  </ul>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -117,9 +134,12 @@ export default {
         });
       }
     },
-    deleteProgrammes(id) {
-      this.$http.delete(url + `programs/${id}`, { headers: getHeader() }).then(() => {
-        this.getInstitutions();
+    edit: function (id) {
+      this.$router.push(`/editprogrammes/${id}`);
+    },
+    deleteI: function (id) {
+      this.$http.delete(url + 'programs/' + id, { headers: getHeader() }).then(() => {
+        this.getProgramme();
       })
     },
     handlePageChange(next) {
@@ -140,6 +160,39 @@ export default {
   }
 }
 </script>
+<style>
+.dropdown a {
+  display: block;
+  padding: 0.2em 0.8em;
+  text-decoration: none;
+  background: #ffffff;
+  color: #333333;
+}
+th {
+  white-space: nowrap;
+}
+.dropdown a:hover {
+  background: #56f063;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  display: none;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+  padding: 0;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+</style>
 
 <style scoped>
 .applyBtn {
@@ -150,6 +203,37 @@ export default {
   width: 100%;
   background: #f6f5fd;
   padding: 20px;
+}
+.dropdown a {
+  display: block;
+  padding: 0.2em 0.8em;
+  text-decoration: none;
+  background: #ffffff;
+  color: #333333;
+}
+th {
+  white-space: nowrap;
+}
+.dropdown a:hover {
+  background: #56f063;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  display: none;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+  padding: 0;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
 }
 .open-sans {
   font-family: "Open Sans", sans-serif;

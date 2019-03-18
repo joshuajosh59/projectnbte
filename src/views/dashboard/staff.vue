@@ -49,6 +49,23 @@
               <td>{{i.name}}</td>
               <td>{{i.code}}</td>
               <td>{{i.category}}</td>
+              <td>
+                <!-- <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/> -->
+                <div class="dropdown" style="margin-left: auto; margin-right: 20px">
+                  <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/>
+                  <ul
+                    class="dropdown-menu"
+                    style="position: absolute; top: -10px; margin-left: -150px"
+                  >
+                    <li>
+                      <a style="cursor: pointer" @click="edit(i.id)">Edit</a>
+                    </li>
+                    <li>
+                      <a style="cursor: pointer" @click="deleteI(i.id)">Trash</a>
+                    </li>
+                  </ul>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -117,16 +134,19 @@ export default {
         });
       }
     },
-    deleteStaffs(id) {
-      this.$http.delete(url + `roles/${id}`, { headers: getHeader() }).then(() => {
-        this.getInstitutions();
+    edit: function (id) {
+      this.$router.push(`/editstaff/${id}`);
+    },
+    deleteI: function (id) {
+      this.$http.delete(url + 'roles/' + id, { headers: getHeader() }).then(() => {
+        this.getProgramme();
       })
     },
     handlePageChange(next) {
       this.getStaff(next);
     },
     getStaff(next = 1) {
-      this.$http.get(url + `roles?page=${next}&size=10`).then((response) => {
+      this.$http.get(url + `roles?page=${next}&size=10`, { headers: getHeader() }).then((response) => {
         this.staffs = response.data.data.data;
         this.totalPage = response.data.data.total;
         this.perPage = response.data.data.perPage;

@@ -50,9 +50,9 @@
               </th>
               <th>Number</th>
               <th>Institution</th>
-              <th>Status</th>
+              <th>Location</th>
               <th>Last Updated</th>
-              <th>Notes</th>
+              <th>About</th>
             </tr>
           </thead>
           <tbody>
@@ -91,7 +91,7 @@
                 <td>{{i.name}}</td>
                 <td>{{i.location}}</td>
                 <td>{{i.year_established}}</td>
-                <td>{{i.about}}</td>
+                <td>{{i.about.substring(0, 120)}} ...</td>
                 <td>
                   <!-- <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/> -->
                   <div class="dropdown" style="margin-left: auto; margin-right: 20px">
@@ -334,24 +334,10 @@ export default {
       })
     },
     edit: function (institution) {
-      this.$refs.modal2.show()
-      this.editId = institution.id
-      this.editSchool.name = institution.name
-      this.editSchool.category = institution.category
-      this.editSchool.email = institution.email
-      this.editSchool.address = institution.address
-      this.editSchool.phone = institution.phone
-      this.editSchool.facebook = institution.facebook
-      this.editSchool.twitter = institution.twitter
-      this.editSchool.instagram = institution.instagram
-      this.editSchool.linkedin = institution.linkedin
-      this.editSchool.website = institution.website
-      this.editSchool.ownership = institution.ownership
-      this.editSchool.location = institution.location
-      this.editSchool.year_established = institution.year_established
-      this.editSchool.about = institution.about
+      this.$router.push(`/editinstitution/${institution.id}`);
     },
     editInstitution: function (id) {
+      this.$router.push('/institution');
       this.$http.put(url + 'institutions/' + id, this.editSchool, { headers: getHeader() }).then((response) => {
         this.getInstitutions();
         return response;

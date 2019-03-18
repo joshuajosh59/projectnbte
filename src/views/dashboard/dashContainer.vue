@@ -9,16 +9,16 @@
           </b-row>
         </div>
         <div style="flex-grow: 1; width: 350px; margin-left: 40px">
-          <input placeholder="Search" ref="xxx" class="form-control xxx mx-auto" type="text">
+          <!-- <input placeholder="Search" ref="xxx" class="form-control xxx mx-auto" type="text"> -->
         </div>
         <div>
-          <font-awesome-icon
+          <!-- <font-awesome-icon
             ref="bell"
             @click="search"
             class="bell"
             :icon="['fas', 'search']"
             size="1x"
-          />
+          />-->
         </div>
         <div style="padding: 0 20px">
           <font-awesome-icon class="notification" :icon="['far', 'bell']" size="1x"/>
@@ -130,7 +130,7 @@
               <span class="span">Staff</span>
             </li>
           </router-link>
-          <li class="list-link">
+          <!-- <li class="list-link">
             <font-awesome-icon
               style="color: white; padding-top: 10px; padding-right: 15px;"
               :icon="['fas', 'th-large']"
@@ -145,7 +145,7 @@
               size="2x"
             />
             <span class="span">Settings</span>
-          </li>
+          </li>-->
           <hr style="border: 0.4px solid #EFEFEF">
           <li class="list-link">
             <font-awesome-icon

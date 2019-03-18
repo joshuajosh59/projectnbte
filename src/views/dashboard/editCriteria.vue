@@ -2,42 +2,29 @@
   <div id="institution">
     <b-row>
       <div class="top-display">
-        <b style="margin-left: 10px; font-size: 20px" class="montserrat">Add Role</b>
+        <b style="margin-left: 10px; font-size: 20px" class="montserrat">Add Criteria</b>
       </div>
     </b-row>
     <br>
     <div style="margin-top: 20px;color: #333333; font-size: 15px; font-family: montserrat">
-      <b-form @submit.prevent="addRole">
+      <b-form @submit.prevent="addCriteria">
         <b-form-group label="Name" label-for="name" label-align="center">
           <b-form-input
             id="name"
             type="text"
-            v-model="object.name"
+            v-model="name"
             required
-            placeholder="Enter Role Name"
+            placeholder="Enter Criteria Name"
           />
         </b-form-group>
-        <b-form-group label="Description" label-for="weigth" label-align="center">
+        <b-form-group label="Weigth" label-for="weigth" label-align="center">
           <b-form-input
             id="weigth"
-            type="text"
-            v-model="object.description"
+            type="number"
+            v-model="weigth"
             required
-            placeholder="Enter Role Description"
+            placeholder="Enter Criteria Weigth"
           />
-        </b-form-group>
-        <b-form-group label="Permission" label-for="permission" label-align="center">
-          <multiselect
-            v-model="object.permissions"
-            tag-placeholder="Add this as new tag"
-            placeholder="Add permission"
-            label="name"
-            track-by="code"
-            :options="options"
-            :multiple="true"
-            :taggable="true"
-            @tag="addTag"
-          ></multiselect>
         </b-form-group>
         <b-row>
           <b-col md="4"></b-col>
@@ -55,64 +42,42 @@
 
 <script>
 import { getHeader, url } from '@/config.js';
-import Multiselect from 'vue-multiselect';
 
 export default {
-  components: { Multiselect },
   data() {
     return {
-      object: {
-        name: '',
-        description: '',
-        permissions: [],
-      },
-      value: [
-
-      ],
-      options: [
-        { name: 'Level 1', code: '1' },
-        { name: 'Level 2', code: '2' },
-        { name: 'Level 3', code: '3' }
-      ]
+      id: this.$route.params.Id,
+      name: '',
+      weigth: '',
     }
   },
   methods: {
-    addRole() {
-      this.$http.post(url + 'roles', this.object, { headers: getHeader() }).then((response) => {
+    addCriteria() {
+      const { name, weigth } = this;
+      this.$http.put(url + `criteria/${this.id}`, { name, 'weight': weigth }, { headers: getHeader() }).then((response) => {
         if (response.data.success) {
           this.$swal({
             type: 'success',
             title: 'Sucess',
-            text: 'Role added successfully',
+            text: 'Criteria updated successfully',
             timer: 2000,
           });
-          this.object.name = '';
-          this.object.code = '';
-          this.object.category = '';
         }
       })
     },
-    // getPermissions() {
-    //   this.$http.get(url + `permissions`, { headers: getHeader() }).then((response) => {
-    //     console.log(response);
-    //   })
-    // },
-    addTag(newTag) {
-      const tag = {
-        name: newTag,
-        code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
-      }
-      this.options.push(tag)
-      this.object.permissions.push(tag)
+    getValues() {
+      this.$http.get(url + `criteria/${this.id}`, { headers: getHeader() }).then((response) => {
+        this.name = response.data.data.name;
+        this.weigth = response.data.data.weight;
+      })
     },
   },
-  //   created() {
-  //     this.getPermissions();
-  //   }
+  created() {
+    this.getValues();
+  }
 }
 
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style>
 .mx-input {
   height: 60px;

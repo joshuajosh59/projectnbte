@@ -50,8 +50,8 @@
               <th></th>
               <th>Title</th>
               <th>Status</th>
+              <th>Content</th>
               <th>Last Updated</th>
-              <th>Notes</th>
             </tr>
           </thead>
           <tbody>
@@ -65,8 +65,25 @@
               <td>{{i+1}}</td>
               <td>{{n.title}}</td>
               <td>{{n.status}}</td>
+              <td>{{n.content.substring(0, 120)}} ...</td>
               <td>{{n.updated_at}}</td>
-              <td>{{n.content}}</td>
+              <td>
+                <!-- <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/> -->
+                <div class="dropdown" style="margin-left: auto; margin-right: 20px">
+                  <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/>
+                  <ul
+                    class="dropdown-menu"
+                    style="position: absolute; top: -10px; margin-left: -150px"
+                  >
+                    <li>
+                      <a style="cursor: pointer" @click="edit(n.id)">Edit</a>
+                    </li>
+                    <li>
+                      <a style="cursor: pointer" @click="deleteI(n.id)">Trash</a>
+                    </li>
+                  </ul>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -134,9 +151,12 @@ export default {
         });
       }
     },
-    deleteNews(id) {
-      this.$http.delete(url + `posts/${id}`, { headers: getHeader() }).then(() => {
-        this.getInstitutions();
+    edit: function (id) {
+      this.$router.push(`/editnews/${id}`);
+    },
+    deleteI: function (id) {
+      this.$http.delete(url + 'posts/' + id, { headers: getHeader() }).then(() => {
+        this.getProgramme();
       })
     },
     openForm() {
