@@ -38,7 +38,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(i) in programmes" :key="i.id">
+            <tr v-for="i in programmes" :key="i.id">
               <td>
                 <label class="form-checkbox">
                   <input type="checkbox" :value="i.id" v-model="selected">
@@ -147,11 +147,11 @@ export default {
     },
     getProgramme(next = 1) {
       this.$http.get(url + `programs?page=${next}&size=10`).then((response) => {
-        this.programmes = response.data.data.data;
+        this.programmes = response.data.data;
         this.totalPage = response.data.data.total;
         this.perPage = response.data.data.perPage;
         this.currentPage = response.data.data.page;
-        this.total = response.data.data.data.length;
+        // this.total = response.data.data.data.length;
       })
     }
   },
