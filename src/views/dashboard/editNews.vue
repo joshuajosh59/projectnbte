@@ -2,54 +2,64 @@
   <div id="institution">
     <b-row>
       <div class="top-display">
-        <b style="margin-left: 10px; font-size: 20px" class="montserrat">Add Role</b>
+        <b style="margin-left: 10px; font-size: 20px" class="montserrat">Add News</b>
+        <!-- <b-btn class="buttons" v-b-modal.modal1>
+          <font-awesome-icon style="margin-right: 3px" :icon="['fas', 'user-plus']"/>Add Institution
+        </b-btn>-->
       </div>
     </b-row>
     <br>
-    <div style="margin-top: 20px;color: #333333; font-size: 15px; font-family: montserrat">
-      <b-form @submit.prevent="addRole">
-        <b-form-group label="Name" label-for="name" label-align="center">
+    <div style="margin-top: 20px; color: #333333; font-size: 15px; font-family: montserrat">
+      <b-form class="addNewInstitution" @submit.prevent="addNews">
+        <b-form-group label="Title" label-for="name">
           <b-form-input
             id="name"
+            v-model="news.title"
             type="text"
-            v-model="object.name"
             required
-            placeholder="Enter Role Name"
+            placeholder="News Title"
           />
         </b-form-group>
-        <b-form-group label="Description" label-for="weigth" label-align="center">
-          <b-form-input
-            id="weigth"
-            type="text"
-            v-model="object.description"
-            required
-            placeholder="Enter Role Description"
+
+        <b-form-group id="exampleInputGroup2" label="Content" label-for="textarea">
+          <b-form-textarea
+            id="textarea"
+            v-model="news.content"
+            placeholder="Enter news content..."
+            rows="8"
           />
-        </b-form-group>
-        <b-form-group label="Permission" label-for="permission" label-align="center">
-          <multiselect
-            v-model="object.permissions"
-            tag-placeholder="Add this as new tag"
-            placeholder="Add permission"
-            label="name"
-            track-by="code"
-            :options="options"
-            :multiple="true"
-            :taggable="true"
-            @tag="addTag"
-          ></multiselect>
         </b-form-group>
         <b-row>
-          <b-col md="4"></b-col>
-          <b-col md="4">
-            <b-btn class="newButton" type="submit">Add</b-btn>
+          <b-col md="12">
+            <b-form-group label="Tags" label-for="address">
+              <multiselect v-model="news.tags" :multiple="true" :options="tags"></multiselect>
+            </b-form-group>
           </b-col>
-          <b-col md="4"></b-col>
+        </b-row>
+
+        <b-row>
+          <b-col md="12">
+            <b-form-group label="Category" label-for="cat" label-align="center">
+              <b-form-input
+                id="address"
+                v-model="news.category"
+                type="text"
+                required
+                placeholder="Enter Category.."
+              />
+            </b-form-group>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col md="3"></b-col>
+          <b-col md="4">
+            <b-btn class="newButton" type="submit">Publish</b-btn>
+            <b-btn class="newButton2" type="submit">Draft</b-btn>
+          </b-col>
+          <b-col md="5"></b-col>
         </b-row>
       </b-form>
     </div>
-    <!-- </b-col>
-    </b-row>-->
   </div>
 </template>
 
@@ -61,54 +71,47 @@ export default {
   components: { Multiselect },
   data() {
     return {
-      object: {
-        name: '',
-        description: '',
-        permissions: [],
+      id: this.$route.params.Id,
+      news: {
+        title: "",
+        category: "",
+        content: "",
+        tags: "",
       },
-      value: [
-
-      ],
-      options: [
-        { name: 'Level 1', code: '1' },
-        { name: 'Level 2', code: '2' },
-        { name: 'Level 3', code: '3' }
-      ]
+      tags: ['stem', 'npm', 'hi', 'hello'],
     }
   },
   methods: {
-    addRole() {
-      this.$http.post(url + 'roles', this.object, { headers: getHeader() }).then((response) => {
+    addNews() {
+      const { title, category, content, tags } = this.news;
+      const obj = {
+        title,
+        category,
+        content,
+        tags: tags.join(),
+      }
+      this.$http.put(url + `posts/${this.id}`, obj, { headers: getHeader() }).then((response) => {
         if (response.data.success) {
           this.$swal({
             type: 'success',
             title: 'Sucess',
-            text: 'Role added successfully',
+            text: 'News added successfully',
             timer: 2000,
           });
-          this.object.name = '';
-          this.object.code = '';
-          this.object.category = '';
+          // this.$forceUpdate();
+          this.$router.push('/news');
         }
       })
     },
-    // getPermissions() {
-    //   this.$http.get(url + `permissions`, { headers: getHeader() }).then((response) => {
-    //     console.log(response);
-    //   })
-    // },
-    addTag(newTag) {
-      const tag = {
-        name: newTag,
-        code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
-      }
-      this.options.push(tag)
-      this.object.permissions.push(tag)
+    getValues() {
+      this.$http.get(url + `posts/${this.id}`, { headers: getHeader() }).then((response) => {
+        this.news = response.data.data;
+      })
     },
   },
-  //   created() {
-  //     this.getPermissions();
-  //   }
+  created() {
+    this.getValues();
+  }
 }
 
 </script>
@@ -116,9 +119,7 @@ export default {
 <style>
 .mx-input {
   height: 60px;
-}
-.main {
-  width: 100%;
+  border: 2px solid #03913f;
 }
 </style>
 

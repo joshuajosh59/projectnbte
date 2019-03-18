@@ -61,6 +61,7 @@ export default {
   components: { Multiselect },
   data() {
     return {
+      id: this.$route.params.Id,
       object: {
         name: '',
         description: '',
@@ -78,12 +79,12 @@ export default {
   },
   methods: {
     addRole() {
-      this.$http.post(url + 'roles', this.object, { headers: getHeader() }).then((response) => {
+      this.$http.put(url + `roles/${this.id}`, this.object, { headers: getHeader() }).then((response) => {
         if (response.data.success) {
           this.$swal({
             type: 'success',
             title: 'Sucess',
-            text: 'Role added successfully',
+            text: 'Role update successfully',
             timer: 2000,
           });
           this.object.name = '';
@@ -105,10 +106,18 @@ export default {
       this.options.push(tag)
       this.object.permissions.push(tag)
     },
+    getValues() {
+      this.$http.get(url + `roles/${this.id}`, { headers: getHeader() }).then((response) => {
+        this.object.name = response.data.data.name;
+        this.object.description = response.data.data.description;
+        this.object.permissions = response.data.data.permissions;
+
+      })
+    },
   },
-  //   created() {
-  //     this.getPermissions();
-  //   }
+  created() {
+    this.getValues();
+  }
 }
 
 </script>

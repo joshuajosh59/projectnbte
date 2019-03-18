@@ -65,6 +65,23 @@
               <td>{{i.name}}</td>
               <td>{{i.weight}}</td>
               <td>{{i.updated_at}}</td>
+              <td>
+                <!-- <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/> -->
+                <div class="dropdown" style="margin-left: auto; margin-right: 20px">
+                  <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/>
+                  <ul
+                    class="dropdown-menu"
+                    style="position: absolute; top: -10px; margin-left: -150px"
+                  >
+                    <li>
+                      <a style="cursor: pointer" @click="edit(i.id)">Edit Criteria</a>
+                    </li>
+                    <li>
+                      <a style="cursor: pointer" @click="deleteI(i.id)">Trash Criteria</a>
+                    </li>
+                  </ul>
+                </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -149,6 +166,9 @@ export default {
         }
       }
     },
+    edit: function (id) {
+      this.$router.push(`/editcriteria/${id}`);
+    },
     gotoAddCriteria() {
       this.$router.push('/addcriteria');
     },
@@ -163,6 +183,11 @@ export default {
             timer: 2000,
           });
         }
+      })
+    },
+    deleteI: function (id) {
+      this.$http.delete(url + 'criteria/' + id, { headers: getHeader() }).then(() => {
+        this.getCriteria();
       })
     },
     handlePageChange(next) {
@@ -192,6 +217,37 @@ export default {
   width: 100%;
   background: #f6f5fd;
   padding: 20px;
+}
+.dropdown a {
+  display: block;
+  padding: 0.2em 0.8em;
+  text-decoration: none;
+  background: #ffffff;
+  color: #333333;
+}
+th {
+  white-space: nowrap;
+}
+.dropdown a:hover {
+  background: #56f063;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown .dropdown-menu {
+  position: absolute;
+  top: 100%;
+  display: none;
+  margin: 0;
+  list-style: none;
+  width: 100%;
+  padding: 0;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
 }
 .open-sans {
   font-family: "Open Sans", sans-serif;

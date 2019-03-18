@@ -2,7 +2,7 @@
   <div id="institution">
     <b-row>
       <div class="top-display">
-        <b style="margin-left: 10px; font-size: 20px" class="montserrat">Add Institution</b>
+        <b style="margin-left: 10px; font-size: 20px" class="montserrat">Edit Institution</b>
         <!-- <b-btn class="buttons" v-b-modal.modal1>
           <font-awesome-icon style="margin-right: 3px" :icon="['fas', 'user-plus']"/>Add Institution
         </b-btn>-->
@@ -40,7 +40,7 @@
       </b-col>
     </b-row>
     <div style="margin-top: 20px; color: #333333; font-size: 15px; font-family: montserrat">
-      <b-form class="addNewInstitution" @submit.prevent="addInstitution">
+      <b-form class="addNewInstitution" @submit.prevent="editInstitution">
         <b-form-group label="Institution name" label-for="name">
           <b-form-input
             id="name"
@@ -268,6 +268,7 @@ export default {
   components: { DatePicker, Multiselect },
   data() {
     return {
+      id: this.$route.params.Id,
       schoolInfo: {
         name: "",
         category: null,
@@ -305,21 +306,23 @@ export default {
       type: [{ value: null, text: 'Choose Type' }, { value: 'ND1', text: 'ND1' }, { value: 'ND2', text: 'ND2' }, { value: 'HND1', text: 'HND1' }, { value: 'HND2', text: 'HND2' }],
       options1: [
         { value: null, text: 'Choose Ownership' },
-        { value: "Federal Government Owned", text: 'Federal Government Owned' },
-        { value: "State Government Owned", text: 'State Government Owned' },
+        { value: "Federal Government", text: 'Federal Government Owned' },
+        { value: "State Government", text: 'State Government Owned' },
         { value: "Private", text: 'Private' },
       ],
       states: ["Abia", "Adamawa", "Anambra", "Akwa Ibom", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta", "Ebonyi", "Enugu", "Edo", "Ekiti", "FCT", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"],
     }
   },
   methods: {
-    addInstitution() {
-      this.$http.post(url + 'institutions', this.schoolInfo, { headers: getHeader() }).then((response) => {
+    editInstitution() {
+      const { name, category, email, about, address, phone, year_established, facebook, twitter, linkedin, instagram, ownership, location, website } = this.schoolInfo;
+      const obj = { name, category, email, about, address, phone, year_established, facebook, twitter, linkedin, instagram, ownership, location, website };
+      this.$http.put(url + `institutions/${this.id}`, obj, { headers: getHeader() }).then((response) => {
         if (response.data.success) {
           this.$swal({
             type: 'success',
             title: 'Sucess',
-            text: 'Institution added successfully',
+            text: 'Institution updated successfully',
             timer: 2000,
           });
           this.$router.push('/institution');
@@ -343,9 +346,14 @@ export default {
         }
       })
     },
+    getValues() {
+      this.$http.get(url + `institutions/${this.id}`, { headers: getHeader() }).then((response) => {
+        this.schoolInfo = response.data.data;
+      })
+    },
   },
   created() {
-    this.getPrograms();
+    this.getValues();
   }
 }
 
@@ -353,16 +361,8 @@ export default {
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style>
 .mx-input {
-  height: 60px !important;
-  border: 2px solid #03913f !important;
-}
-.multiselect {
-  font-family: inherit;
-  font-size: 16px;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
-  /* height: 60px !important; */
-  border: 2px solid #03913f !important;
+  height: 60px;
+  border: 2px solid #03913f;
 }
 </style>
 
