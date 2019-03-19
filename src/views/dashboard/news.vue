@@ -66,7 +66,7 @@
               <td>{{n.title}}</td>
               <td>{{n.status}}</td>
               <td>{{n.content.substring(0, 120)}} ...</td>
-              <td>{{n.updated_at}}</td>
+              <td>{{formatDate(n.updated_at)}}</td>
               <td>
                 <!-- <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/> -->
                 <div class="dropdown" style="margin-left: auto; margin-right: 20px">
@@ -161,6 +161,10 @@ export default {
     },
     openForm() {
       this.$router.push('/addnews');
+    },
+    formatDate(date) {
+      let dd = new Date(date);
+      return dd.toLocaleDateString('en-EN');
     },
     handlePageChange(next) {
       this.getNews(next);

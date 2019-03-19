@@ -51,12 +51,12 @@
               <th>Number</th>
               <th>Institution</th>
               <th>Location</th>
-              <th>Last Updated</th>
+              <th>Year Established</th>
               <th>About</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="i in institutions" :key="i.id">
+            <tr v-for="(i, index) in institutions" :key="i.id" @dblclick="edit(i)">
               <!-- <template v-if="editId == i.id">
                             <td>
                                 <label class="form-checkbox">
@@ -87,7 +87,7 @@
                     <i class="form-icon"></i>
                   </label>
                 </td>
-                <td>{{i.rank}}</td>
+                <td>{{index + 1}}</td>
                 <td>{{i.name}}</td>
                 <td>{{i.location}}</td>
                 <td>{{i.year_established}}</td>
@@ -224,9 +224,10 @@
     <b-pagination
       style="margin-top:20px"
       size="md"
-      :total-rows="lastPage"
+      :total-rows="total"
       v-model="currentPage"
       :per-page="perPage"
+      @change="handlePageChange"
     />
   </div>
 </template>
@@ -343,9 +344,11 @@ export default {
         return response;
       })
     },
-    getInstitutions: function () {
-      this.$http.get(url + 'institutions?page=1,size=10').then((response) => {
-        this.lastPage = response.data.data.lastPage
+    handlePageChange(next) {
+      this.getInstitutions(next);
+    },
+    getInstitutions: function (next) {
+      this.$http.get(url + `institutions?page=${next},size=10`).then((response) => {
         this.institutions = response.data.data.data
         this.perPage = response.data.data.perPage
         this.currentPage = response.data.data.page

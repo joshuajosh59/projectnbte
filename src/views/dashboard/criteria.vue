@@ -54,7 +54,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="i in criteria" :key="i.id">
+            <tr v-for="i in criteria" :key="i.id" @dblclick="edit(i.id)">
               <td>
                 <label class="form-checkbox">
                   <input type="checkbox" :value="i.id" v-model="selected">
@@ -195,7 +195,7 @@ export default {
     },
     getCriteria(next = 1) {
       this.$http.get(url + `criteria?page=${next}&size=10`).then((response) => {
-        this.criteria = response.data.data.data;
+        this.criteria = response.data.data;
         this.totalPage = response.data.data.total;
         this.perPage = response.data.data.perPage;
         this.currentPage = response.data.data.page;
