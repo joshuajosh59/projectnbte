@@ -41,7 +41,7 @@
                   <i class="form-icon"></i>
                 </label>
               </th>
-              <th>.</th>
+              <th>Score</th>
               <th>Name</th>
               <th>Status</th>
               <th>Last Updated</th>
@@ -61,10 +61,11 @@
                 <td>{{i.name}}</td>
                 <td v-if="i.rank > 0">Ranked</td>
                 <td v-else>Unranked</td>
-                <td>{{formatDate(i.created_at)}}</td>
+                <td v-if="i.updated_at !== null">{{formatDate(i.updated_at)}}</td>
+                <td v-else>----</td>
                 <td>{{i.about}}</td>
                 <td>
-                  <b-btn v-if="i.rank > 0" disabled="true" class="buttons">Rank</b-btn>
+                  <b-btn v-if="i.rank > 0" :disabled="true" class="buttons">Rank</b-btn>
                   <b-btn v-else @click="rankIns(i.id)" class="buttons">Rank</b-btn>
                 </td>
                 <!-- <td>
@@ -99,6 +100,7 @@
       :total-rows="lastPage"
       v-model="currentPage"
       :per-page="perPage"
+      @change="handlePageChange"
     />
     <!-- <b-row>
       <b-col md="2">
@@ -150,9 +152,12 @@ export default {
     rankIns(id) {
       this.$router.push(`/rankinstitution/${id}`);
     },
-    getInstitutions: function () {
-      this.$http.get(url + 'institutions?page=1,size=10').then((response) => {
-        this.lastPage = response.data.data.lastPage
+    handlePageChange(next) {
+      this.getInstitutions(next);
+    },
+    getInstitutions: function (next) {
+      this.$http.get(url + `institutions?page=${next},size=10`).then((response) => {
+        this.lastPage = response.data.data.total
         this.institutions = response.data.data.data
         this.perPage = response.data.data.perPage
         this.currentPage = response.data.data.page

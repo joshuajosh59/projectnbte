@@ -29,14 +29,14 @@
         </div>-->
       </b-col>
       <b-col md="6">
-        <div style="display: flex">
+        <!-- <div style="display: flex">
           <div style="flex-grow: 1; width: 350px; margin-left: 40px">
             <input placeholder="Search" class="form-control mx-auto" type="text">
           </div>
           <div style="flex-grow: 1; width: 350px; margin-top: 10px">
             <b-btn class="buttons" style="padding: 8px 40px">Search</b-btn>
           </div>
-        </div>
+        </div>-->
       </b-col>
     </b-row>
     <div style="margin-top: 20px; color: #333333; font-size: 15px; font-family: montserrat">
@@ -60,7 +60,7 @@
           />
         </b-form-group>
         <b-row>
-          <b-col md="6">
+          <b-col md="4">
             <b-form-group label="Address" label-for="address">
               <b-form-input
                 id="address"
@@ -71,8 +71,13 @@
               />
             </b-form-group>
           </b-col>
-          <b-col md="6">
+          <b-col md="4">
             <b-form-group label="State" label-for="address">
+              <b-form-select v-model="schoolInfo.state" :options="states"/>
+            </b-form-group>
+          </b-col>
+          <b-col md="4">
+            <b-form-group label="Location" label-for="address">
               <b-form-select v-model="schoolInfo.location" :options="states"/>
             </b-form-group>
           </b-col>
@@ -91,20 +96,13 @@
           </b-col>
           <b-col md="4">
             <b-form-group label="Year of Establishment" label-for="address">
-              <!-- <b-form-input
+              <b-form-input
                 id="address"
-                type="text"
+                type="number"
                 v-model="schoolInfo.year_established"
                 required
-                placeholder="Enter Address.."
-              />-->
-              <date-picker
-                v-model="schoolInfo.year_established"
-                type="year"
-                lang="en"
-                placeholder="Select Year"
-                heigth="100"
-              ></date-picker>
+                placeholder="Enter year e.g 1992"
+              />
             </b-form-group>
           </b-col>
         </b-row>
@@ -193,17 +191,10 @@
             <h6 class="seperator">Programmes</h6>
           </b-col>
         </b-row>
-        <b-row v-for="programme in schoolInfo.programmes" :key="programme.name">
+        <b-row v-for="programme in schoolInfo.programs" :key="programme.name">
           <b-col md="4">
             <b-form-group label="Name" label-for="pName" label-align="center">
-              <multiselect v-model="programme.name" :options="opt"></multiselect>
-              <!-- <b-form-input
-                id="pName"
-                v-model="programme.name"
-                type="text"
-                required
-                placeholder="Enter Programme name"
-              />-->
+              <b-form-select v-model="programme.program_id" :options="opt"/>
             </b-form-group>
           </b-col>
           <b-col md="2">
@@ -231,7 +222,7 @@
             <b-form-group label="Male" label-for="ml" label-align="center">
               <b-form-input
                 id="ml"
-                type="text"
+                type="number"
                 v-model="programme.male"
                 required
                 placeholder="Total Male"
@@ -240,17 +231,17 @@
           </b-col>
         </b-row>
         <b-row>
-          <b-col md="5">
+          <b-col md="7">
             <b-btn class="newButton" @click="addProgramme">Add New Programme</b-btn>
           </b-col>
-          <b-col md="4"></b-col>
-          <b-col md="5"></b-col>
+          <b-col md="3"></b-col>
+          <b-col md="2"></b-col>
         </b-row>
         <b-row>
           <b-col md="3"></b-col>
           <b-col md="4">
             <b-btn class="newButton" type="submit">Publish</b-btn>
-            <b-btn class="newButton2" type="submit">Draft</b-btn>
+            <!-- <b-btn class="newButton2" type="submit">Draft</b-btn> -->
           </b-col>
           <b-col md="5"></b-col>
         </b-row>
@@ -261,11 +252,8 @@
 
 <script>
 import { getHeader, url } from '@/config.js';
-import DatePicker from 'vue2-datepicker';
-import Multiselect from 'vue-multiselect';
 
 export default {
-  components: { DatePicker, Multiselect },
   data() {
     return {
       schoolInfo: {
@@ -281,11 +269,12 @@ export default {
         linkedin: "",
         instagram: "",
         ownership: null,
+        state: "",
         location: "",
         website: "",
-        programmes: [
+        programs: [
           {
-            name: "",
+            program_id: null,
             mode: null,
             type: null,
             female: "",
@@ -293,7 +282,7 @@ export default {
           }
         ],
       },
-      opt: [],
+      opt: [{ value: null, text: 'Select a program' }],
       options: [
         { value: null, text: 'Choose Category' },
         { value: "Polytechnic", text: 'Polytechnic' },
@@ -327,8 +316,8 @@ export default {
       })
     },
     addProgramme() {
-      this.schoolInfo.programmes.push({
-        name: "",
+      this.schoolInfo.programs.push({
+        program_id: null,
         mode: null,
         type: null,
         female: "",
@@ -336,10 +325,13 @@ export default {
       });
     },
     getPrograms() {
-      this.$http.get(url + `programs?page=1&size=20`, { headers: getHeader() }).then((response) => {
-        let c = response.data.data.data;
+      this.$http.get(url + `programs`, { headers: getHeader() }).then((response) => {
+        let c = response.data.data;
         for (let i = 0; i < c.length; i++) {
-          this.opt.push(c[i].name);
+          this.opt.push({
+            value: c[i].id,
+            text: c[i].name
+          });
         }
       })
     },

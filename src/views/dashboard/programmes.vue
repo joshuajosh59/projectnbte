@@ -38,7 +38,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="i in programmes" :key="i.id">
+            <tr v-for="i in programmes" :key="i.id" @dblclick="edit(i.id)">
               <td>
                 <label class="form-checkbox">
                   <input type="checkbox" :value="i.id" v-model="selected">
@@ -135,7 +135,7 @@ export default {
       }
     },
     edit: function (id) {
-      this.$router.push(`/editprogrammes/${id}`);
+      this.$router.push(`/editprogramme/${id}`);
     },
     deleteI: function (id) {
       this.$http.delete(url + 'programs/' + id, { headers: getHeader() }).then(() => {

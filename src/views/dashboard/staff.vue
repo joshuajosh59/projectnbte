@@ -147,7 +147,7 @@ export default {
     },
     getStaff(next = 1) {
       this.$http.get(url + `roles?page=${next}&size=10`, { headers: getHeader() }).then((response) => {
-        this.staffs = response.data.data.data;
+        this.staffs = response.data.data;
         this.totalPage = response.data.data.total;
         this.perPage = response.data.data.perPage;
         this.currentPage = response.data.data.page;
