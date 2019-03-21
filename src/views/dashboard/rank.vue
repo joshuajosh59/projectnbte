@@ -65,8 +65,7 @@
                 <td v-else>----</td>
                 <td>{{i.about}}</td>
                 <td>
-                  <b-btn v-if="i.rank > 0" :disabled="true" class="buttons">Rank</b-btn>
-                  <b-btn v-else @click="rankIns(i.id)" class="buttons">Rank</b-btn>
+                  <b-btn @click="rankIns(i.id)" class="buttons">Rank</b-btn>
                 </td>
                 <!-- <td>
                   <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/>
@@ -158,7 +157,7 @@ export default {
     getInstitutions: function (next) {
       this.$http.get(url + `institutions?page=${next},size=10`).then((response) => {
         this.lastPage = response.data.data.total
-        this.institutions = response.data.data.data
+        this.institutions = response.data.data.data.reverse();
         this.perPage = response.data.data.perPage
         this.currentPage = response.data.data.page
         this.total = response.data.data.total

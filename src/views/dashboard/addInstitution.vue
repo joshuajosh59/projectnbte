@@ -288,7 +288,7 @@ export default {
         { value: "Polytechnic", text: 'Polytechnic' },
         { value: "College of Education", text: 'College of Education' },
         { value: "College of Agriculture", text: 'College of Agriculture' },
-        { value: "College of Health", text: 'College of Health' },
+        { value: "Specialised institution", text: 'Specialised institution' },
       ],
       mode: [{ value: null, text: 'Choose Mode' }, { value: 'Fulltime', text: 'Fulltime' }, { value: 'Parttime', text: 'Parttime' }],
       type: [{ value: null, text: 'Choose Type' }, { value: 'ND1', text: 'ND1' }, { value: 'ND2', text: 'ND2' }, { value: 'HND1', text: 'HND1' }, { value: 'HND2', text: 'HND2' }],
