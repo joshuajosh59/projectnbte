@@ -118,13 +118,13 @@
           </b-form-group>
         </b-col>
         <b-col md="6">
-          <b-form-group label="Weigth" label-for="weigth" label-align="center">
+          <b-form-group label="Weight" label-for="weight" label-align="center">
             <b-form-input
-              id="weigth"
+              id="weight"
               type="number"
-              v-model="weigth"
+              v-model="weight"
               required
-              placeholder="Enter Criteria Weigth"
+              placeholder="Enter Criteria Weight"
             />
           </b-form-group>
         </b-col>
@@ -151,7 +151,7 @@ export default {
       selectAll: false,
       criteria: [],
       name: '',
-      weigth: '',
+      weight: '',
       totalPage: 20,
       perPage: 10,
       currentPage: 1,
@@ -173,8 +173,8 @@ export default {
       this.$router.push('/addcriteria');
     },
     addCriteria() {
-      const { name, weigth } = this;
-      this.$http.post(url + 'criteria', { name, 'weight': weigth }, { headers: getHeader() }).then((response) => {
+      const { name, weight } = this;
+      this.$http.post(url + 'criteria', { name, 'weight': weight }, { headers: getHeader() }).then((response) => {
         if (response.data.success) {
           this.$swal({
             type: 'success',
@@ -203,7 +203,8 @@ export default {
     }
   },
   created() {
-    this.getCriteria()
+    this.getCriteria();
+    this.$parent.display = false;
   }
 }
 </script>

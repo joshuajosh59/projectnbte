@@ -2,7 +2,7 @@
   <div id="institution">
     <b-row>
       <div class="top-display">
-        <b style="margin-left: 10px; font-size: 20px" class="montserrat">Ranking</b>
+        <b style="margin-left: 10px; font-size: 20px" class="montserrat">Grading</b>
       </div>
     </b-row>
     <br>
@@ -10,13 +10,16 @@
       <b-col md="6">
         <div class="top-display" style="margin-top: 10px">
           <div class="top-display-items">
-            <p>All({{this.total}})</p>
+            <p>
+              All({{this.total}})
+              <b-btn @click="rankAll()" class="buttons">Graded</b-btn>
+            </p>
           </div>
           <div class="top-display-items border-line green">
-            <p>Ranked ({{this.ranked}})</p>
+            <p>Graded ({{this.ranked}})</p>
           </div>
           <div class="top-display-items green">
-            <p>Unranked ({{this.unranked}})</p>
+            <p>Ungraded ({{this.unranked}})</p>
           </div>
           <br>
           <br>
@@ -24,13 +27,6 @@
       </b-col>
     </b-row>
     <div style="margin-top: 20px; color: #333333; font-size: 15px; font-family: montserrat">
-      <!-- <b-table responsive striped hover :fields="fields" :items="items">
-                <template slot="control" slot-scope="data">
-                    <b-form-checkbox id="checkbox1" v-model="status" value="accepted" unchecked-value="not_accepted">
-                        119
-                    </b-form-checkbox>
-                </template>
-      </b-table>-->
       <div class="table-responsive">
         <table class="table table-hover">
           <thead>
@@ -59,35 +55,14 @@
                 </td>
                 <td>{{i.rank}}</td>
                 <td>{{i.name}}</td>
-                <td v-if="i.rank > 0">Ranked</td>
-                <td v-else>Unranked</td>
+                <td v-if="i.rank > 0">Graded</td>
+                <td v-else>Ungraded</td>
                 <td v-if="i.updated_at !== null">{{formatDate(i.updated_at)}}</td>
                 <td v-else>----</td>
                 <td>{{i.about}}</td>
                 <td>
-                  <b-btn v-if="i.rank > 0" :disabled="true" class="buttons">Rank</b-btn>
-                  <b-btn v-else @click="rankIns(i.id)" class="buttons">Rank</b-btn>
+                  <b-btn @click="rankIns(i.id)" class="buttons">Grade</b-btn>
                 </td>
-                <!-- <td>
-                  <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/>
-                  <div class="dropdown" style="margin-left: auto; margin-right: 20px">
-                    <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/>
-                    <ul
-                      class="dropdown-menu"
-                      style="position: absolute; top: -10px; margin-left: -150px"
-                    >
-                      <li>
-                        <a style="cursor: pointer" @click="edit(i)">Edit Institution</a>
-                      </li>
-                      <li>
-                        <a
-                          style="cursor: pointer"
-                          @click="deleteInstitution(i.id)"
-                        >Trash Institution</a>
-                      </li>
-                    </ul>
-                  </div>
-                </td>-->
               </template>
             </tr>
           </tbody>
@@ -102,20 +77,11 @@
       :per-page="perPage"
       @change="handlePageChange"
     />
-    <!-- <b-row>
-      <b-col md="2">
-        <b-form-select v-model="action" style="border-radius: 38px" :options="options"/>
-      </b-col>
-      <b-col md="4">
-        <b-btn class="applyBtn">Apply</b-btn>
-      </b-col>
-      <b-col md="4"></b-col>
-    </b-row>-->
   </div>
 </template>
 
 <script>
-import { url } from '@/config.js';
+import { url, getHeader } from '@/config.js';
 
 
 export default {
@@ -155,10 +121,32 @@ export default {
     handlePageChange(next) {
       this.getInstitutions(next);
     },
+    rankAll() {
+      this.$swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Rank it!'
+      }).then((result) => {
+        if (result.value) {
+          this.$http.put(url + `rank`, {}, { headers: getHeader() }).then((response) => {
+            this.$swal.fire(
+              'Graded!',
+              'Successfully.',
+              'success'
+            );
+            return response;
+          })
+        }
+      })
+    },
     getInstitutions: function (next) {
       this.$http.get(url + `institutions?page=${next},size=10`).then((response) => {
         this.lastPage = response.data.data.total
-        this.institutions = response.data.data.data
+        this.institutions = response.data.data.data.reverse();
         this.perPage = response.data.data.perPage
         this.currentPage = response.data.data.page
         this.total = response.data.data.total
@@ -169,6 +157,7 @@ export default {
   },
   created: function () {
     this.getInstitutions();
+    this.$parent.display = false;
   }
 }
 

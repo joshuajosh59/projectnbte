@@ -169,7 +169,8 @@ export default {
     }
   },
   created() {
-    this.getWebometric()
+    this.getWebometric();
+    this.$parent.display = false;
   }
 }
 </script>

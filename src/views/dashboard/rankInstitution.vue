@@ -73,9 +73,9 @@ export default {
       })
     },
     getCriteria() {
-      this.$http.get(url + `criteria?page=1&size=50`).then((response) => {
-        this.criterias = response.data.data.data;
-        let c = response.data.data.data;
+      this.$http.get(url + `criteria`).then((response) => {
+        this.criterias = response.data.data;
+        let c = response.data.data;
         for (let i = 0; i < c.length; i++) {
           this.criteria.push({
             "criterion_id": c[i].id,

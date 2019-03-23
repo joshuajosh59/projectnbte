@@ -156,7 +156,8 @@ export default {
     }
   },
   created() {
-    this.getProgramme()
+    this.getProgramme();
+    this.$parent.display = false;
   }
 }
 </script>

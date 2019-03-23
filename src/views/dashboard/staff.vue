@@ -156,7 +156,8 @@ export default {
     }
   },
   created() {
-    this.getStaff()
+    this.getStaff();
+    this.$parent.display = false;
   }
 }
 </script>

@@ -17,13 +17,13 @@
             placeholder="Enter Criteria Name"
           />
         </b-form-group>
-        <b-form-group label="Weigth" label-for="weigth" label-align="center">
+        <b-form-group label="Weight" label-for="weight" label-align="center">
           <b-form-input
-            id="weigth"
+            id="weight"
             type="number"
-            v-model="weigth"
+            v-model="weight"
             required
-            placeholder="Enter Criteria Weigth"
+            placeholder="Enter Criteria Weight"
           />
         </b-form-group>
         <b-row>
@@ -48,13 +48,13 @@ export default {
     return {
       id: this.$route.params.Id,
       name: '',
-      weigth: '',
+      weight: '',
     }
   },
   methods: {
     addCriteria() {
-      const { name, weigth } = this;
-      this.$http.put(url + `criteria/${this.id}`, { name, 'weight': weigth }, { headers: getHeader() }).then((response) => {
+      const { name, weight } = this;
+      this.$http.put(url + `criteria/${this.id}`, { name, 'weight': weight }, { headers: getHeader() }).then((response) => {
         if (response.data.success) {
           this.$swal({
             type: 'success',
@@ -68,7 +68,7 @@ export default {
     getValues() {
       this.$http.get(url + `criteria/${this.id}`, { headers: getHeader() }).then((response) => {
         this.name = response.data.data.name;
-        this.weigth = response.data.data.weight;
+        this.weight = response.data.data.weight;
       })
     },
   },

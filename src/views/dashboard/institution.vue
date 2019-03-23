@@ -358,6 +358,7 @@ export default {
   },
   created: function () {
     this.getInstitutions();
+    this.$parent.display = false;
   }
 }
 
