@@ -17,13 +17,13 @@
             placeholder="Enter Criteria Name"
           />
         </b-form-group>
-        <b-form-group label="Weigth" label-for="weigth" label-align="center">
+        <b-form-group label="Weight" label-for="weight" label-align="center">
           <b-form-input
-            id="weigth"
+            id="weight"
             type="number"
-            v-model="weigth"
+            v-model="weight"
             required
-            placeholder="Enter Criteria Weigth"
+            placeholder="Enter Criteria Weight"
           />
         </b-form-group>
         <b-row>
@@ -49,13 +49,13 @@ export default {
   data() {
     return {
       name: '',
-      weigth: '',
+      weight: '',
     }
   },
   methods: {
     addCriteria() {
-      const { name, weigth } = this;
-      this.$http.post(url + 'criteria', { name, 'weight': weigth }, { headers: getHeader() }).then((response) => {
+      const { name, weight } = this;
+      this.$http.post(url + 'criteria', { name, 'weight': weight }, { headers: getHeader() }).then((response) => {
         if (response.data.success) {
           this.$swal({
             type: 'success',

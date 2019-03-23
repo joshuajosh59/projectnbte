@@ -183,6 +183,7 @@ export default {
   },
   created() {
     this.getNews();
+    this.$parent.display = false;
   }
 }
 </script>

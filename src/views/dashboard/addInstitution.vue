@@ -3,42 +3,9 @@
     <b-row>
       <div class="top-display">
         <b style="margin-left: 10px; font-size: 20px" class="montserrat">Add Institution</b>
-        <!-- <b-btn class="buttons" v-b-modal.modal1>
-          <font-awesome-icon style="margin-right: 3px" :icon="['fas', 'user-plus']"/>Add Institution
-        </b-btn>-->
       </div>
     </b-row>
     <br>
-    <b-row>
-      <b-col md="6">
-        <!-- <div class="top-display" style="margin-top: 10px">
-          <div class="top-display-items">
-            <p>All(11)</p>
-          </div>
-          <div class="top-display-items border-line green">
-            <p>Mine (8)</p>
-          </div>
-          <div class="top-display-items border-line green">
-            <p>Published (10)</p>
-          </div>
-          <div class="top-display-items green">
-            <p>Draft</p>
-          </div>
-          <br>
-          <br>
-        </div>-->
-      </b-col>
-      <b-col md="6">
-        <!-- <div style="display: flex">
-          <div style="flex-grow: 1; width: 350px; margin-left: 40px">
-            <input placeholder="Search" class="form-control mx-auto" type="text">
-          </div>
-          <div style="flex-grow: 1; width: 350px; margin-top: 10px">
-            <b-btn class="buttons" style="padding: 8px 40px">Search</b-btn>
-          </div>
-        </div>-->
-      </b-col>
-    </b-row>
     <div style="margin-top: 20px; color: #333333; font-size: 15px; font-family: montserrat">
       <b-form class="addNewInstitution" @submit.prevent="addInstitution">
         <b-form-group label="Institution name" label-for="name">
@@ -78,7 +45,13 @@
           </b-col>
           <b-col md="4">
             <b-form-group label="Location" label-for="address">
-              <b-form-select v-model="schoolInfo.location" :options="states"/>
+              <b-form-input
+                id="address"
+                type="text"
+                v-model="schoolInfo.location"
+                required
+                placeholder="Enter location e.g Ajah"
+              />
             </b-form-group>
           </b-col>
         </b-row>
@@ -116,7 +89,7 @@
             <b-form-group label="Email" label-for="email" label-align="center">
               <b-form-input
                 id="email"
-                type="text"
+                type="email"
                 v-model="schoolInfo.email"
                 required
                 placeholder="Enter email..."
@@ -127,7 +100,7 @@
             <b-form-group label="Website" label-for="website" label-align="center">
               <b-form-input
                 id="website"
-                type="text"
+                type="url"
                 v-model="schoolInfo.website"
                 required
                 placeholder="Enter website..."
@@ -138,7 +111,7 @@
             <b-form-group label="Phone Number" label-for="phone" label-align="center">
               <b-form-input
                 id="phone"
-                type="text"
+                type="number"
                 v-model="schoolInfo.phone"
                 required
                 placeholder="Enter Phone..."
@@ -191,7 +164,10 @@
             <h6 class="seperator">Programmes</h6>
           </b-col>
         </b-row>
-        <b-row v-for="programme in schoolInfo.programs" :key="programme.name">
+        <b-row v-for="(programme, index) in schoolInfo.programs" :key="programme.name">
+          <b-col md="12">
+            <b @click="removeProgramme(index)">x</b>
+          </b-col>
           <b-col md="4">
             <b-form-group label="Name" label-for="pName" label-align="center">
               <b-form-select v-model="programme.program_id" :options="opt"/>
@@ -324,6 +300,9 @@ export default {
         male: "",
       });
     },
+    removeProgramme(index) {
+      this.schoolInfo.programs.splice(index, 1);
+    },
     getPrograms() {
       this.$http.get(url + `programs`, { headers: getHeader() }).then((response) => {
         let c = response.data.data;
@@ -366,6 +345,9 @@ export default {
 </style>
 
 <style scoped>
+b:hover {
+  cursor: pointer;
+}
 .addNewInstitution input,
 select {
   height: 60px;

@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import VueSweetalert2 from 'vue-sweetalert2';
+import VeeValidate from 'vee-validate'
 import {
   faKey,
   faBars,
@@ -36,6 +37,10 @@ Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(VueAxios, axios);
 Vue.use(VueSweetalert2);
+Vue.use(VeeValidate, {
+  inject: true,
+  fieldsBagName: 'veeFields'
+})
 library.add(
   faKey,
   faCheck,
