@@ -42,10 +42,8 @@
 
 <script>
 import { getHeader, url } from '@/config.js';
-import DatePicker from 'vue2-datepicker';
 
 export default {
-  components: { DatePicker },
   data() {
     return {
       name: '',

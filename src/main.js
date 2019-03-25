@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import VueSweetalert2 from 'vue-sweetalert2';
-import VeeValidate from 'vee-validate'
+import VeeValidate from 'vee-validate';
 import {
   faKey,
   faBars,
@@ -32,15 +32,22 @@ import { faBell, faNewspaper } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import VueForm from 'vue-form';
 
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(VueAxios, axios);
+Vue.use(VueForm, {
+  inputClasses: {
+    valid: 'form-control-success',
+    invalid: 'form-control-danger',
+  },
+});
 Vue.use(VueSweetalert2);
 Vue.use(VeeValidate, {
   inject: true,
-  fieldsBagName: 'veeFields'
-})
+  fieldsBagName: 'veeFields',
+});
 library.add(
   faKey,
   faCheck,

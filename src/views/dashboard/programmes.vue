@@ -157,7 +157,7 @@ export default {
   },
   created() {
     this.getProgramme();
-    this.$parent.display = false;
+    (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1) ? this.$parent.display = false : true;
   }
 }
 </script>
