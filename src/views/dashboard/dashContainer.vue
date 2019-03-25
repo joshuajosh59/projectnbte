@@ -5,7 +5,8 @@
         <div>
           <b-row>
             <font-awesome-icon @click="toggleNav" class="menu" :icon="['fas', 'bars']" size="2x"/>
-            <b class="montserrat brand">NBTE</b>
+            <!-- <b class="montserrat brand">NBTE</b> -->
+            <img class="brand" src="./../../assets/logoW.png" style="width: 250px; height: 36px;">
           </b-row>
         </div>
         <div style="flex-grow: 1; width: 350px; margin-left: 40px">
@@ -21,7 +22,7 @@
           />-->
         </div>
         <div style="padding: 0 20px">
-          <font-awesome-icon class="notification" :icon="['far', 'bell']" size="1x"/>
+          <font-awesome-icon @click="logout" class="notification" :icon="['fa', 'sign-out-alt']"/>
         </div>
         <div style="padding: 0 10px">
           <img
@@ -32,7 +33,7 @@
           >
         </div>
         <div style="margin-right: 30px">
-          <p class="open-sans mt-2 name" style="color: white">Engr. Alabi Taiwo</p>
+          <p class="open-sans mt-2 name" style="color: white">{{this.name}}</p>
         </div>
       </div>
     </div>
@@ -165,11 +166,13 @@
 </template>
 
 <script>
+import { url, getHeader } from '@/config.js';
 export default {
   data() {
     return {
       display: true,
-      active: 'institution'
+      active: 'institution',
+      name: '',
     }
   },
   methods: {
@@ -178,7 +181,31 @@ export default {
     },
     search: function () {
       this.$refs.xxx.style.display = "block";
+    },
+    logout: function () {
+      this.$swal.fire({
+        title: 'Logout!',
+        text: "Are you sure you want to Logout?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Log me out!'
+      }).then((result) => {
+        if (result.value) {
+          localStorage.clear();
+          return window.location.replace(`${window.location.origin}/`);
+        }
+      })
+    },
+    getMe: function () {
+      this.$http.get(url + `me`, { headers: getHeader() }).then((response) => {
+        this.name = response.data.user.name;
+      })
     }
+  },
+  created() {
+    this.getMe()
   }
 }
 </script>
@@ -191,6 +218,7 @@ export default {
 .notification {
   color: white;
   margin: 12px;
+  cursor: pointer;
 }
 .top-nav {
   background: #03913f;

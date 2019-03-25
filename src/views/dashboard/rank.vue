@@ -10,10 +10,7 @@
       <b-col md="6">
         <div class="top-display" style="margin-top: 10px">
           <div class="top-display-items">
-            <p>
-              All({{this.total}})
-              <b-btn @click="rankAll()" class="buttons">Graded</b-btn>
-            </p>
+            <p>All({{this.total}})</p>
           </div>
           <div class="top-display-items border-line green">
             <p>Graded ({{this.ranked}})</p>
@@ -24,6 +21,9 @@
           <br>
           <br>
         </div>
+      </b-col>
+      <b-col md="6">
+        <b-btn @click="rankAll()" class="buttons">Grade</b-btn>
       </b-col>
     </b-row>
     <div style="margin-top: 20px; color: #333333; font-size: 15px; font-family: montserrat">
@@ -235,6 +235,7 @@ tr:nth-child(even) {
   margin-top: -5px;
   border-radius: 38px;
   background: #03913f;
+  float: right;
 }
 .table {
   background: white;

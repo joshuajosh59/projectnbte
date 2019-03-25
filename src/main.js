@@ -27,6 +27,7 @@ import {
   faListAlt,
   faUserPlus,
   faPlus,
+  faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { faBell, faNewspaper } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -68,7 +69,8 @@ library.add(
   faListAlt,
   faBookOpen,
   faPlus,
-  faNewspaper
+  faNewspaper,
+  faSignOutAlt
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
