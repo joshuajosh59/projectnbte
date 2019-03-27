@@ -68,7 +68,7 @@ export default {
             text: 'Institution ranked successfully',
             timer: 3000,
           });
-          this.$router.push('/rank');
+          this.$router.push('/admin/rank');
         }
       })
     },

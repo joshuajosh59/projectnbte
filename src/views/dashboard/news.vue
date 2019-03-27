@@ -152,7 +152,7 @@ export default {
       }
     },
     edit: function (id) {
-      this.$router.push(`/editnews/${id}`);
+      this.$router.push(`/admin/editnews/${id}`);
     },
     deleteI: function (id) {
       this.$http.delete(url + 'posts/' + id, { headers: getHeader() }).then(() => {
@@ -160,7 +160,7 @@ export default {
       })
     },
     openForm() {
-      this.$router.push('/addnews');
+      this.$router.push('/admin/addnews');
     },
     formatDate(date) {
       let dd = new Date(date);
@@ -242,5 +242,15 @@ tr:nth-child(even) {
 .form-control {
   border-radius: 38px !important;
   /* max-width: 350px;  */
+}
+@media (max-width: 1240px) {
+  th:nth-child(2),
+  td:nth-child(2),
+  th:nth-child(4),
+  td:nth-child(4),
+  th:nth-child(6),
+  td:nth-child(6) {
+    display: none;
+  }
 }
 </style>

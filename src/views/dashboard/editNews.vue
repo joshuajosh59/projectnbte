@@ -99,7 +99,7 @@ export default {
             timer: 2000,
           });
           // this.$forceUpdate();
-          this.$router.push('/news');
+          this.$router.push('/admin/news');
         }
       })
     },

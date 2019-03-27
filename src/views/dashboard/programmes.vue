@@ -119,7 +119,7 @@ export default {
       }
     },
     gotoAddProgramme() {
-      this.$router.push('/addprogrammes');
+      this.$router.push('/admin/addprogrammes');
     },
     performBulkActions(type) {
       if (type === 'delete') {
@@ -135,7 +135,7 @@ export default {
       }
     },
     edit: function (id) {
-      this.$router.push(`/editprogramme/${id}`);
+      this.$router.push(`/admin/editprogramme/${id}`);
     },
     deleteI: function (id) {
       this.$http.delete(url + 'programs/' + id, { headers: getHeader() }).then(() => {
@@ -280,5 +280,13 @@ tr:nth-child(even) {
 .form-control {
   border-radius: 38px !important;
   /* max-width: 350px;  */
+}
+@media (max-width: 1240px) {
+  th:nth-child(2),
+  td:nth-child(2),
+  th:nth-child(4),
+  td:nth-child(4) {
+    display: none;
+  }
 }
 </style>

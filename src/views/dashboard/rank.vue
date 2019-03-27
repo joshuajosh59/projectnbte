@@ -10,10 +10,7 @@
       <b-col md="6">
         <div class="top-display" style="margin-top: 10px">
           <div class="top-display-items">
-            <p>
-              All({{this.total}})
-              <b-btn @click="rankAll()" class="buttons">Graded</b-btn>
-            </p>
+            <p>All({{this.total}})</p>
           </div>
           <div class="top-display-items border-line green">
             <p>Graded ({{this.ranked}})</p>
@@ -24,6 +21,10 @@
           <br>
           <br>
         </div>
+      </b-col>
+      <b-col md="2"></b-col>
+      <b-col md="4">
+        <b-btn @click="rankAll()" class="buttonb">Rank</b-btn>
       </b-col>
     </b-row>
     <div style="margin-top: 20px; color: #333333; font-size: 15px; font-family: montserrat">
@@ -116,7 +117,7 @@ export default {
       return dd.toLocaleDateString('en-EN');
     },
     rankIns(id) {
-      this.$router.push(`/rankinstitution/${id}`);
+      this.$router.push(`/admin/rankinstitution/${id}`);
     },
     handlePageChange(next) {
       this.getInstitutions(next);
@@ -236,6 +237,14 @@ tr:nth-child(even) {
   border-radius: 38px;
   background: #03913f;
 }
+.buttonb {
+  margin-left: 10px;
+  margin-top: -5px;
+  width: 50%;
+  border-radius: 38px;
+  background: #03913f;
+  float: right;
+}
 .table {
   background: white;
 }
@@ -258,5 +267,13 @@ tr:nth-child(even) {
 .form-control {
   border-radius: 38px !important;
   /* max-width: 350px;  */
+}
+@media (max-width: 1240px) {
+  th:nth-child(5),
+  td:nth-child(5),
+  th:nth-child(6),
+  td:nth-child(6) {
+    display: none;
+  }
 }
 </style>

@@ -119,7 +119,7 @@ export default {
       }
     },
     gotoAddStaff() {
-      this.$router.push('/addstaff');
+      this.$router.push('/admin/addstaff');
     },
     performBulkActions(type) {
       if (type === 'delete') {
@@ -135,7 +135,7 @@ export default {
       }
     },
     edit: function (id) {
-      this.$router.push(`/editstaff/${id}`);
+      this.$router.push(`/admin/editstaff/${id}`);
     },
     deleteI: function (id) {
       this.$http.delete(url + 'roles/' + id, { headers: getHeader() }).then(() => {
@@ -151,7 +151,7 @@ export default {
         this.totalPage = response.data.data.total;
         this.perPage = response.data.data.perPage;
         this.currentPage = response.data.data.page;
-        this.total = response.data.data.data.length;
+        this.total = response.data.data.length;
       })
     }
   },

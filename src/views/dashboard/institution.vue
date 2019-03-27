@@ -321,7 +321,7 @@ export default {
       }
     },
     openForm() {
-      this.$router.push('/addnew');
+      this.$router.push('/admin/addnew');
     },
     addInstitution() {
       this.$http.post(url + 'institutions', this.schoolInfo, { headers: getHeader() }).then((response) => {
@@ -335,10 +335,10 @@ export default {
       })
     },
     edit: function (institution) {
-      this.$router.push(`/editinstitution/${institution.id}`);
+      this.$router.push(`/admin/editinstitution/${institution.id}`);
     },
     editInstitution: function (id) {
-      this.$router.push('/institution');
+      this.$router.push('/admin/institution');
       this.$http.put(url + 'institutions/' + id, this.editSchool, { headers: getHeader() }).then((response) => {
         this.getInstitutions();
         return response;
@@ -460,5 +460,13 @@ tr:nth-child(even) {
 .form-control {
   border-radius: 38px !important;
   /* max-width: 350px;  */
+}
+@media (max-width: 1240px) {
+  th:nth-child(2),
+  td:nth-child(2),
+  th:nth-child(6),
+  td:nth-child(6) {
+    display: none;
+  }
 }
 </style>

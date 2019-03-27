@@ -1,7 +1,7 @@
 export const authGuard = (to, from, next) => {
   const tokenData = JSON.parse(window.localStorage.getItem('authUser'));
   if (!tokenData) {
-    next('/login');
+    next('/admin/login');
   } else {
     next();
   }
@@ -10,7 +10,7 @@ export const authGuard = (to, from, next) => {
 export const loginAuth = (to, from, next) => {
   const tokenData = JSON.parse(window.localStorage.getItem('authUser'));
   if (tokenData) {
-    next('/institution');
+    next('/admin/institution');
   } else {
     next();
   }

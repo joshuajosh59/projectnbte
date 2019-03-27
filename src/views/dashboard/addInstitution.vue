@@ -11,9 +11,9 @@
         <b-form-group label="Institution name" label-for="name">
           <b-form-input
             id="name"
+            :class="errorName"
             v-model="schoolInfo.name"
             type="text"
-            required
             placeholder="Kaduna Polytechnic"
           />
         </b-form-group>
@@ -22,6 +22,7 @@
           <b-form-textarea
             id="textarea"
             v-model="schoolInfo.about"
+            :class="errorAbout"
             placeholder="Enter a brief description..."
             rows="8"
           />
@@ -32,15 +33,15 @@
               <b-form-input
                 id="address"
                 v-model="schoolInfo.address"
+                :class="errorAdd"
                 type="text"
-                required
                 placeholder="Enter Address.."
               />
             </b-form-group>
           </b-col>
           <b-col md="4">
             <b-form-group label="State" label-for="address">
-              <b-form-select v-model="schoolInfo.state" :options="states"/>
+              <b-form-select :class="errorState" v-model="schoolInfo.state" :options="states"/>
             </b-form-group>
           </b-col>
           <b-col md="4">
@@ -49,7 +50,7 @@
                 id="address"
                 type="text"
                 v-model="schoolInfo.location"
-                required
+                :class="errorLocation"
                 placeholder="Enter location e.g Ajah"
               />
             </b-form-group>
@@ -59,12 +60,20 @@
         <b-row>
           <b-col md="4">
             <b-form-group label="Category" label-for="cat" label-align="center">
-              <b-form-select v-model="schoolInfo.category" :options="options"/>
+              <b-form-select
+                :class="errorCategory"
+                v-model="schoolInfo.category"
+                :options="options"
+              />
             </b-form-group>
           </b-col>
           <b-col md="4">
             <b-form-group label="Ownership" label-for="ownership" label-align="center">
-              <b-form-select v-model="schoolInfo.ownership" :options="options1"/>
+              <b-form-select
+                :class="errorOwnership"
+                v-model="schoolInfo.ownership"
+                :options="options1"
+              />
             </b-form-group>
           </b-col>
           <b-col md="4">
@@ -73,7 +82,7 @@
                 id="address"
                 type="number"
                 v-model="schoolInfo.year_established"
-                required
+                :class="errorYoe"
                 placeholder="Enter year e.g 1992"
               />
             </b-form-group>
@@ -91,7 +100,7 @@
                 id="email"
                 type="email"
                 v-model="schoolInfo.email"
-                required
+                :class="errorEmail"
                 placeholder="Enter email..."
               />
             </b-form-group>
@@ -102,7 +111,7 @@
                 id="website"
                 type="url"
                 v-model="schoolInfo.website"
-                required
+                :class="errorWeb"
                 placeholder="Enter website..."
               />
             </b-form-group>
@@ -113,7 +122,7 @@
                 id="phone"
                 type="number"
                 v-model="schoolInfo.phone"
-                required
+                :class="errorPhone"
                 placeholder="Enter Phone..."
               />
             </b-form-group>
@@ -131,7 +140,7 @@
                 id="facebook"
                 type="text"
                 v-model="schoolInfo.facebook"
-                required
+                :class="errorFb"
                 placeholder="Enter Facebook Username..."
               />
             </b-form-group>
@@ -142,7 +151,7 @@
                 id="twitter"
                 type="text"
                 v-model="schoolInfo.twitter"
-                required
+                :class="errorTwitter"
                 placeholder="Enter Twitter Username..."
               />
             </b-form-group>
@@ -153,7 +162,7 @@
                 id="instagram"
                 type="text"
                 v-model="schoolInfo.instagram"
-                required
+                :class="errorInsta"
                 placeholder="Enter Instagram Username..."
               />
             </b-form-group>
@@ -170,17 +179,17 @@
           </b-col>
           <b-col md="4">
             <b-form-group label="Name" label-for="pName" label-align="center">
-              <b-form-select v-model="programme.program_id" :options="opt"/>
+              <b-form-select :class="errorProgId" v-model="programme.program_id" :options="opt"/>
             </b-form-group>
           </b-col>
           <b-col md="2">
             <b-form-group label="Mode" label-for="mode" label-align="center">
-              <b-form-select v-model="programme.mode" :options="mode"/>
+              <b-form-select :class="errorProgMode" v-model="programme.mode" :options="mode"/>
             </b-form-group>
           </b-col>
           <b-col md="2">
             <b-form-group label="Type" label-for="type" label-align="center">
-              <b-form-select v-model="programme.type" :options="type"/>
+              <b-form-select :class="errorProgType" v-model="programme.type" :options="type"/>
             </b-form-group>
           </b-col>
           <b-col md="2">
@@ -189,7 +198,7 @@
                 id="fm"
                 type="number"
                 v-model="programme.female"
-                required
+                :class="errorProgF"
                 placeholder="Total Female"
               />
             </b-form-group>
@@ -200,18 +209,17 @@
                 id="ml"
                 type="number"
                 v-model="programme.male"
-                required
+                :class="errorProgM"
                 placeholder="Total Male"
               />
             </b-form-group>
           </b-col>
         </b-row>
         <b-row>
-          <b-col md="7">
+          <b-col md="9">
             <b-btn class="newButton" @click="addProgramme">Add New Programme</b-btn>
           </b-col>
           <b-col md="3"></b-col>
-          <b-col md="2"></b-col>
         </b-row>
         <b-row>
           <b-col md="3"></b-col>
@@ -230,6 +238,11 @@
 import { getHeader, url } from '@/config.js';
 
 export default {
+  computed: {
+    state() {
+      return this.schoolInfo.name ? true : false;
+    }
+  },
   data() {
     return {
       schoolInfo: {
@@ -254,55 +267,200 @@ export default {
             mode: null,
             type: null,
             female: "",
-            male: "",
+            male: ""
           }
-        ],
+        ]
       },
-      opt: [{ value: null, text: 'Select a program' }],
+      opt: [
+        { value: null, text: "Select a program" },
+        { value: 3, text: "Computer Science" }
+      ],
       options: [
-        { value: null, text: 'Choose Category' },
-        { value: "Polytechnic", text: 'Polytechnic' },
-        { value: "College of Education", text: 'College of Education' },
-        { value: "College of Agriculture", text: 'College of Agriculture' },
-        { value: "Specialised institution", text: 'Specialised institution' },
+        { value: null, text: "Choose Category" },
+        { value: "Polytechnic", text: "Polytechnic" },
+        { value: "College of Education", text: "College of Education" },
+        { value: "College of Agriculture", text: "College of Agriculture" },
+        { value: "Specialised institution", text: "Specialised institution" }
       ],
-      mode: [{ value: null, text: 'Choose Mode' }, { value: 'Fulltime', text: 'Fulltime' }, { value: 'Parttime', text: 'Parttime' }],
-      type: [{ value: null, text: 'Choose Type' }, { value: 'ND1', text: 'ND1' }, { value: 'ND2', text: 'ND2' }, { value: 'HND1', text: 'HND1' }, { value: 'HND2', text: 'HND2' }],
+      mode: [
+        { value: null, text: "Choose Mode" },
+        { value: "Fulltime", text: "Fulltime" },
+        { value: "Parttime", text: "Parttime" }
+      ],
+      type: [
+        { value: null, text: "Choose Type" },
+        { value: "ND1", text: "ND1" },
+        { value: "ND2", text: "ND2" },
+        { value: "HND1", text: "HND1" },
+        { value: "HND2", text: "HND2" }
+      ],
       options1: [
-        { value: null, text: 'Choose Ownership' },
-        { value: "Federal Government Owned", text: 'Federal Government Owned' },
-        { value: "State Government Owned", text: 'State Government Owned' },
-        { value: "Private", text: 'Private' },
+        { value: null, text: "Choose Ownership" },
+        { value: "Federal Government Owned", text: "Federal Government Owned" },
+        { value: "State Government Owned", text: "State Government Owned" },
+        { value: "Private", text: "Private" }
       ],
-      states: ["Abia", "Adamawa", "Anambra", "Akwa Ibom", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River", "Delta", "Ebonyi", "Enugu", "Edo", "Ekiti", "FCT", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"],
+      states: [
+        "Abia",
+        "Adamawa",
+        "Anambra",
+        "Akwa Ibom",
+        "Bauchi",
+        "Bayelsa",
+        "Benue",
+        "Borno",
+        "Cross River",
+        "Delta",
+        "Ebonyi",
+        "Enugu",
+        "Edo",
+        "Ekiti",
+        "FCT",
+        "Gombe",
+        "Imo",
+        "Jigawa",
+        "Kaduna",
+        "Kano",
+        "Katsina",
+        "Kebbi",
+        "Kogi",
+        "Kwara",
+        "Lagos",
+        "Nasarawa",
+        "Niger",
+        "Ogun",
+        "Ondo",
+        "Osun",
+        "Oyo",
+        "Plateau",
+        "Rivers",
+        "Sokoto",
+        "Taraba",
+        "Yobe",
+        "Zamfara"
+      ],
+      errorName: "",
+      errorAbout: "",
+      errorAdd: "",
+      errorState: "",
+      errorLocation: "",
+      errorCategory: "",
+      errorOwnership: "",
+      errorYoe: "",
+      errorEmail: "",
+      errorWeb: "",
+      errorPhone: "",
+      errorFb: "",
+      errorTwitter: "",
+      errorInsta: "",
+      errorProgId: "",
+      errorProgMode: "",
+      errorProgType: "",
+      errorProgF: "",
+      errorProgM: ""
+    };
+  },
+  watch: {
+    "schoolInfo.name"(val) {
+      if (val) {
+        this.errorName = "";
+      } else {
+        this.errorName = "danger";
+      }
+    },
+    "schoolInfo.about"(val) {
+      if (val) {
+        this.errorAbout = "";
+      } else {
+        this.errorAbout = "danger";
+      }
+    },
+    "schoolInfo.email"(val) {
+      if (val) {
+        this.errorEmail = "";
+      } else {
+        this.errorEmail = "danger";
+      }
+    },
+    "schoolInfo.location"(val) {
+      if (val) {
+        this.errorLocation = "";
+      } else {
+        this.errorLocation = "danger";
+      }
+    },
+    "schoolInfo.address"(val) {
+      if (val) {
+        this.errorAdd = "";
+      } else {
+        this.errorAdd = "danger";
+      }
+    },
+    "schoolInfo.state"(val) {
+      if (val) {
+        this.errorState = "";
+      } else {
+        this.errorState = "danger";
+      }
+    },
+    "schoolInfo.category"(val) {
+      if (val) {
+        this.errorCategory = "";
+      } else {
+        this.errorCategory = "danger";
+      }
+    },
+    "schoolInfo.ownership"(val) {
+      if (val) {
+        this.errorOwnership = "";
+      } else {
+        this.errorOwnership = "danger";
+      }
+    },
+    "schoolInfo.year_established"(val) {
+      if (val) {
+        this.errorYoe = "";
+      } else {
+        this.errorYoe = "danger";
+      }
+    },
+    "schoolInfo.website"(val) {
+      if (val) {
+        this.errorWeb = "";
+      } else {
+        this.errorWeb = "danger";
+      }
+    },
+    "schoolInfo.phone"(val) {
+      if (val) {
+        this.errorPhone = "";
+      } else {
+        this.errorPhone = "danger";
+      }
+    },
+    "schoolInfo.facebook"(val) {
+      if (val) {
+        this.errorFb = "";
+      } else {
+        this.errorFb = "danger";
+      }
+    },
+    "schoolInfo.twitter"(val) {
+      if (val) {
+        this.errorTwitter = "";
+      } else {
+        this.errorTwitter = "danger";
+      }
+    },
+    "schoolInfo.instagram"(val) {
+      if (val) {
+        this.errorInsta = "";
+      } else {
+        this.errorInsta = "danger";
+      }
     }
   },
   methods: {
-    addInstitution() {
-      this.$http.post(url + 'institutions', this.schoolInfo, { headers: getHeader() }).then((response) => {
-        if (response.data.success) {
-          this.$swal({
-            type: 'success',
-            title: 'Sucess',
-            text: 'Institution added successfully',
-            timer: 2000,
-          });
-          this.$router.push('/institution');
-        }
-      })
-    },
-    addProgramme() {
-      this.schoolInfo.programs.push({
-        program_id: null,
-        mode: null,
-        type: null,
-        female: "",
-        male: "",
-      });
-    },
-    removeProgramme(index) {
-      this.schoolInfo.programs.splice(index, 1);
-    },
     getPrograms() {
       this.$http.get(url + `programs`, { headers: getHeader() }).then((response) => {
         let c = response.data.data;
@@ -314,15 +472,128 @@ export default {
         }
       })
     },
+    addInstitution() {
+      if (
+        this.schoolInfo.name &&
+        this.schoolInfo.about &&
+        this.schoolInfo.address &&
+        this.schoolInfo.state &&
+        this.schoolInfo.location &&
+        this.schoolInfo.category &&
+        this.schoolInfo.ownership &&
+        this.schoolInfo.year_established &&
+        this.schoolInfo.email &&
+        this.schoolInfo.website &&
+        this.schoolInfo.phone &&
+        this.schoolInfo.facebook &&
+        this.schoolInfo.twitter &&
+        this.schoolInfo.instagram &&
+        this.schoolInfo.programs[0].program_id &&
+        this.schoolInfo.programs[0].mode &&
+        this.schoolInfo.programs[0].type &&
+        this.schoolInfo.programs[0].female &&
+        this.schoolInfo.programs[0].male
+      ) {
+        this.$http.post(url + 'institutions', this.schoolInfo, { headers: getHeader() }).then((response) => {
+          if (response.data.success) {
+            this.$swal({
+              type: 'success',
+              title: 'Sucess',
+              text: 'Institution added successfully',
+              timer: 2000,
+            });
+            this.$router.push('/admin/institution');
+          }
+        })
+      } else {
+        if (!this.schoolInfo.name) {
+          this.errorName = "danger";
+        }
+        if (!this.schoolInfo.email) {
+          this.errorEmail = "danger";
+        }
+        if (!this.schoolInfo.about) {
+          this.errorAbout = "danger";
+        }
+        if (!this.schoolInfo.address) {
+          this.errorAdd = "danger";
+        }
+        if (!this.schoolInfo.state) {
+          this.errorState = "danger";
+        }
+        if (!this.schoolInfo.location) {
+          this.errorLocation = "danger";
+        }
+        if (!this.schoolInfo.category) {
+          this.errorCategory = "danger";
+        }
+        if (!this.schoolInfo.ownership) {
+          this.errorOwnership = "danger";
+        }
+        if (!this.schoolInfo.year_established) {
+          this.errorYoe = "danger";
+        }
+        if (!this.schoolInfo.website) {
+          this.errorWeb = "danger";
+        }
+        if (!this.schoolInfo.phone) {
+          this.errorPhone = "danger";
+        }
+        if (!this.schoolInfo.facebook) {
+          this.errorFb = "danger";
+        }
+        if (!this.schoolInfo.twitter) {
+          this.errorTwitter = "danger";
+        }
+        if (!this.schoolInfo.instagram) {
+          this.errorInsta = "danger";
+        }
+        if (!this.schoolInfo.programs[0].program_id) {
+          this.errorProgId = "danger";
+        }
+        if (!this.schoolInfo.programs[0].mode) {
+          this.errorProgMode = "danger";
+        }
+        if (!this.schoolInfo.programs[0].type) {
+          this.errorProgType = "danger";
+        }
+        if (!this.schoolInfo.programs[0].female) {
+          this.errorProgF = "danger";
+        }
+        if (!this.schoolInfo.programs[0].male) {
+          this.errorProgM = "danger";
+        }
+        this.$swal({
+          type: 'error',
+          title: 'Error',
+          text: 'Please fill all fields in red',
+          timer: 1500,
+        });
+      }
+    },
+    addProgramme() {
+      this.schoolInfo.programs.push({
+        program_id: null,
+        mode: null,
+        type: null,
+        female: "",
+        male: ""
+      });
+    },
+    removeProgramme(index) {
+      this.schoolInfo.programs.splice(index, 1);
+    }
   },
   created() {
     this.getPrograms();
   }
-}
-
+};
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style>
+.danger {
+  height: 60px !important;
+  border: 2px solid red !important;
+}
 .mx-input {
   height: 60px !important;
   border: 2px solid #03913f !important;

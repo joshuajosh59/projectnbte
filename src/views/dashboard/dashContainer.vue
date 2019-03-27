@@ -5,7 +5,8 @@
         <div>
           <b-row>
             <font-awesome-icon @click="toggleNav" class="menu" :icon="['fas', 'bars']" size="2x"/>
-            <b class="montserrat brand">NBTE</b>
+            <!-- <b class="montserrat brand">NBTE</b> -->
+            <img class="brand" src="./../../assets/logoW.png" style="width: 250px; height: 36px;">
           </b-row>
         </div>
         <div style="flex-grow: 1; width: 350px; margin-left: 40px">
@@ -21,7 +22,7 @@
           />-->
         </div>
         <div style="padding: 0 20px">
-          <font-awesome-icon class="notification" :icon="['far', 'bell']" size="1x"/>
+          <font-awesome-icon @click="logout" class="notification" :icon="['fa', 'sign-out-alt']"/>
         </div>
         <div style="padding: 0 10px">
           <img
@@ -32,7 +33,7 @@
           >
         </div>
         <div style="margin-right: 30px">
-          <p class="open-sans mt-2 name" style="color: white">Engr. Alabi Taiwo</p>
+          <p class="open-sans mt-2 name" style="color: white">{{this.name}}</p>
         </div>
       </div>
     </div>
@@ -50,7 +51,11 @@
             />
             <span class="span">Overview</span>
           </li>
-          <router-link class="institution" @click="makeActive('institution')" to="/institution">
+          <router-link
+            class="institution"
+            @click="makeActive('institution')"
+            to="/admin/institution"
+          >
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
@@ -60,7 +65,7 @@
               <span class="span">Institution</span>
             </li>
           </router-link>
-          <router-link class="criteria" @click="makeActive('criteria')" to="/criteria">
+          <router-link class="criteria" @click="makeActive('criteria')" to="/admin/criteria">
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
@@ -70,37 +75,37 @@
               <span class="span">Criteria</span>
             </li>
           </router-link>
-          <router-link class="criteria" @click="makeActive('criteria')" to="/webometrics">
+          <router-link class="criteria" @click="makeActive('criteria')" to="/admin/webometrics">
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
-                :icon="['fas', 'list-alt']"
+                :icon="['fa', 'globe']"
                 size="2x"
               />
               <span class="span">Webometrics</span>
             </li>
           </router-link>
-          <router-link class="news" @click="makeActive('programmes')" to="/programmes">
+          <router-link class="news" @click="makeActive('programmes')" to="/admin/programmes">
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
-                :icon="['fas', 'plus']"
+                :icon="['fa', 'book-open']"
                 size="2x"
               />
               <span class="span">Programme</span>
             </li>
           </router-link>
-          <router-link class="news" @click="makeActive('rank')" to="/rank">
+          <router-link class="news" @click="makeActive('rank')" to="/admin/rank">
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
-                :icon="['far', 'bell']"
+                :icon="['fa', 'star']"
                 size="2x"
               />
               <span class="span">Rank</span>
             </li>
           </router-link>
-          <router-link class="news" @click="makeActive('news')" to="/news">
+          <router-link class="news" @click="makeActive('news')" to="/admin/news">
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
@@ -110,7 +115,7 @@
               <span class="span">News</span>
             </li>
           </router-link>
-          <router-link class="users" @click="makeActive('users')" to="/users">
+          <router-link class="users" @click="makeActive('users')" to="/admin/users">
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
@@ -120,7 +125,7 @@
               <span class="span">Users</span>
             </li>
           </router-link>
-          <router-link class="users" @click="makeActive('users')" to="/staff">
+          <router-link class="users" @click="makeActive('users')" to="/admin/staff">
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
@@ -165,11 +170,14 @@
 </template>
 
 <script>
+import { url, getHeader } from '@/config.js';
+
 export default {
   data() {
     return {
       display: true,
-      active: 'institution'
+      active: 'institution',
+      name: '',
     }
   },
   methods: {
@@ -178,7 +186,31 @@ export default {
     },
     search: function () {
       this.$refs.xxx.style.display = "block";
+    },
+    logout: function () {
+      this.$swal.fire({
+        title: 'Logout!',
+        text: "Are you sure you want to Logout?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Log me out!'
+      }).then((result) => {
+        if (result.value) {
+          localStorage.clear();
+          return window.location.replace(`${window.location.origin}/`);
+        }
+      })
+    },
+    getMe: function () {
+      this.$http.get(url + `me`, { headers: getHeader() }).then((response) => {
+        this.name = response.data.user.name;
+      })
     }
+  },
+  created() {
+    this.getMe()
   }
 }
 </script>
@@ -191,6 +223,7 @@ export default {
 .notification {
   color: white;
   margin: 12px;
+  cursor: pointer;
 }
 .top-nav {
   background: #03913f;

@@ -314,7 +314,7 @@ export default {
             text: 'Institution updated successfully',
             timer: 2000,
           });
-          this.$router.push('/institution');
+          this.$router.push('/admin/institution');
         }
       })
     },

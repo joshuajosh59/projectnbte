@@ -167,10 +167,10 @@ export default {
       }
     },
     edit: function (id) {
-      this.$router.push(`/editcriteria/${id}`);
+      this.$router.push(`/admin/editcriteria/${id}`);
     },
     gotoAddCriteria() {
-      this.$router.push('/addcriteria');
+      this.$router.push('/admin/addCriteria');
     },
     addCriteria() {
       const { name, weight } = this;
@@ -294,5 +294,13 @@ tr:nth-child(even) {
 .form-control {
   border-radius: 38px !important;
   /* max-width: 350px;  */
+}
+@media (max-width: 1240px) {
+  th:nth-child(2),
+  td:nth-child(2),
+  th:nth-child(4),
+  td:nth-child(4) {
+    display: none;
+  }
 }
 </style>
