@@ -281,4 +281,12 @@ tr:nth-child(even) {
   border-radius: 38px !important;
   /* max-width: 350px;  */
 }
+@media (max-width: 1240px) {
+  th:nth-child(2),
+  td:nth-child(2),
+  th:nth-child(4),
+  td:nth-child(4) {
+    display: none;
+  }
+}
 </style>

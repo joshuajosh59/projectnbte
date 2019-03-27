@@ -75,7 +75,7 @@
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
-                :icon="['fas', 'list-alt']"
+                :icon="['fa', 'globe']"
                 size="2x"
               />
               <span class="span">Webometrics</span>
@@ -85,7 +85,7 @@
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
-                :icon="['fas', 'plus']"
+                :icon="['fa', 'book-open']"
                 size="2x"
               />
               <span class="span">Programme</span>
@@ -95,7 +95,7 @@
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
-                :icon="['far', 'bell']"
+                :icon="['fa', 'star']"
                 size="2x"
               />
               <span class="span">Rank</span>
@@ -167,6 +167,7 @@
 
 <script>
 import { url, getHeader } from '@/config.js';
+
 export default {
   data() {
     return {

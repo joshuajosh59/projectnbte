@@ -22,8 +22,9 @@
           <br>
         </div>
       </b-col>
-      <b-col md="6">
-        <b-btn @click="rankAll()" class="buttons">Grade</b-btn>
+      <b-col md="2"></b-col>
+      <b-col md="4">
+        <b-btn @click="rankAll()" class="buttonb">Rank</b-btn>
       </b-col>
     </b-row>
     <div style="margin-top: 20px; color: #333333; font-size: 15px; font-family: montserrat">
@@ -235,6 +236,13 @@ tr:nth-child(even) {
   margin-top: -5px;
   border-radius: 38px;
   background: #03913f;
+}
+.buttonb {
+  margin-left: 10px;
+  margin-top: -5px;
+  width: 50%;
+  border-radius: 38px;
+  background: #03913f;
   float: right;
 }
 .table {
@@ -259,5 +267,13 @@ tr:nth-child(even) {
 .form-control {
   border-radius: 38px !important;
   /* max-width: 350px;  */
+}
+@media (max-width: 1240px) {
+  th:nth-child(5),
+  td:nth-child(5),
+  th:nth-child(6),
+  td:nth-child(6) {
+    display: none;
+  }
 }
 </style>

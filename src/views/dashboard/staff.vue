@@ -151,7 +151,7 @@ export default {
         this.totalPage = response.data.data.total;
         this.perPage = response.data.data.perPage;
         this.currentPage = response.data.data.page;
-        this.total = response.data.data.data.length;
+        this.total = response.data.data.length;
       })
     }
   },
