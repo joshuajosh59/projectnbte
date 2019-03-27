@@ -119,7 +119,7 @@ export default {
       }
     },
     gotoAddProgramme() {
-      this.$router.push('/addprogrammes');
+      this.$router.push('/admin/addprogrammes');
     },
     performBulkActions(type) {
       if (type === 'delete') {
@@ -135,7 +135,7 @@ export default {
       }
     },
     edit: function (id) {
-      this.$router.push(`/editprogramme/${id}`);
+      this.$router.push(`/admin/editprogramme/${id}`);
     },
     deleteI: function (id) {
       this.$http.delete(url + 'programs/' + id, { headers: getHeader() }).then(() => {

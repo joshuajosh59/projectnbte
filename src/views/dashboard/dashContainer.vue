@@ -51,7 +51,11 @@
             />
             <span class="span">Overview</span>
           </li>
-          <router-link class="institution" @click="makeActive('institution')" to="/institution">
+          <router-link
+            class="institution"
+            @click="makeActive('institution')"
+            to="/admin/institution"
+          >
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
@@ -61,7 +65,7 @@
               <span class="span">Institution</span>
             </li>
           </router-link>
-          <router-link class="criteria" @click="makeActive('criteria')" to="/criteria">
+          <router-link class="criteria" @click="makeActive('criteria')" to="/admin/criteria">
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
@@ -71,7 +75,7 @@
               <span class="span">Criteria</span>
             </li>
           </router-link>
-          <router-link class="criteria" @click="makeActive('criteria')" to="/webometrics">
+          <router-link class="criteria" @click="makeActive('criteria')" to="/admin/webometrics">
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
@@ -81,7 +85,7 @@
               <span class="span">Webometrics</span>
             </li>
           </router-link>
-          <router-link class="news" @click="makeActive('programmes')" to="/programmes">
+          <router-link class="news" @click="makeActive('programmes')" to="/admin/programmes">
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
@@ -91,7 +95,7 @@
               <span class="span">Programme</span>
             </li>
           </router-link>
-          <router-link class="news" @click="makeActive('rank')" to="/rank">
+          <router-link class="news" @click="makeActive('rank')" to="/admin/rank">
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
@@ -101,7 +105,7 @@
               <span class="span">Rank</span>
             </li>
           </router-link>
-          <router-link class="news" @click="makeActive('news')" to="/news">
+          <router-link class="news" @click="makeActive('news')" to="/admin/news">
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
@@ -111,7 +115,7 @@
               <span class="span">News</span>
             </li>
           </router-link>
-          <router-link class="users" @click="makeActive('users')" to="/users">
+          <router-link class="users" @click="makeActive('users')" to="/admin/users">
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"
@@ -121,7 +125,7 @@
               <span class="span">Users</span>
             </li>
           </router-link>
-          <router-link class="users" @click="makeActive('users')" to="/staff">
+          <router-link class="users" @click="makeActive('users')" to="/admin/staff">
             <li class="list-link">
               <font-awesome-icon
                 style="color: white; padding-top: 10px; padding-right: 15px;"

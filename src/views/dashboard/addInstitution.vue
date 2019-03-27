@@ -502,7 +502,7 @@ export default {
               text: 'Institution added successfully',
               timer: 2000,
             });
-            this.$router.push('/institution');
+            this.$router.push('/admin/institution');
           }
         })
       } else {

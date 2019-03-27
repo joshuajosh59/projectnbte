@@ -167,10 +167,10 @@ export default {
       }
     },
     edit: function (id) {
-      this.$router.push(`/editcriteria/${id}`);
+      this.$router.push(`/admin/editcriteria/${id}`);
     },
     gotoAddCriteria() {
-      this.$router.push('/addcriteria');
+      this.$router.push('/admin/addCriteria');
     },
     addCriteria() {
       const { name, weight } = this;

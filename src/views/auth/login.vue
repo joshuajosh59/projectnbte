@@ -78,7 +78,7 @@ export default {
         authUser.token = response.data.token.token
         authUser.refreshToken = response.data.token.refreshToken
         window.localStorage.setItem('authUser', JSON.stringify(authUser))
-        this.$router.push('/institution');
+        this.$router.push('/admin/institution');
       });
     }
   }

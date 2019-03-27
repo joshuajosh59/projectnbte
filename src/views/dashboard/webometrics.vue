@@ -119,7 +119,7 @@ export default {
       }
     },
     gotoAddWebometric() {
-      this.$router.push('/addwebometrics');
+      this.$router.push('/admin/addWebometrics');
     },
     performBulkActions(type) {
       if (type === 'delete') {
@@ -135,7 +135,7 @@ export default {
       }
     },
     edit: function (id) {
-      this.$router.push(`/editwebometrics/${id}`);
+      this.$router.push(`/admin/editwebometrics/${id}`);
     },
     deleteI: function (id) {
       this.$http.delete(url + 'webometrics/' + id, { headers: getHeader() }).then(() => {

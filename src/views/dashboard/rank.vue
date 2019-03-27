@@ -117,7 +117,7 @@ export default {
       return dd.toLocaleDateString('en-EN');
     },
     rankIns(id) {
-      this.$router.push(`/rankinstitution/${id}`);
+      this.$router.push(`/admin/rankinstitution/${id}`);
     },
     handlePageChange(next) {
       this.getInstitutions(next);

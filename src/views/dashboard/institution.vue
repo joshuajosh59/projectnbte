@@ -321,7 +321,7 @@ export default {
       }
     },
     openForm() {
-      this.$router.push('/addnew');
+      this.$router.push('/admin/addnew');
     },
     addInstitution() {
       this.$http.post(url + 'institutions', this.schoolInfo, { headers: getHeader() }).then((response) => {
@@ -335,10 +335,10 @@ export default {
       })
     },
     edit: function (institution) {
-      this.$router.push(`/editinstitution/${institution.id}`);
+      this.$router.push(`/admin/editinstitution/${institution.id}`);
     },
     editInstitution: function (id) {
-      this.$router.push('/institution');
+      this.$router.push('/admin/institution');
       this.$http.put(url + 'institutions/' + id, this.editSchool, { headers: getHeader() }).then((response) => {
         this.getInstitutions();
         return response;
