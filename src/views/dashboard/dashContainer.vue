@@ -199,7 +199,7 @@ export default {
       }).then((result) => {
         if (result.value) {
           localStorage.clear();
-          return window.location.replace(`${window.location.origin}/`);
+          return window.location.replace(`${window.location.origin}/admin`);
         }
       })
     },
