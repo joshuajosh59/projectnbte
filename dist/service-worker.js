@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.42c075b1a591208e805dae180846faa9.js"
+  "/precache-manifest.59361b27501bc9cf2c7fab765a7edadb.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "nbte"});

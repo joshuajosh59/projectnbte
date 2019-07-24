@@ -8,6 +8,6 @@ export const getHeader = function() {
   return headers;
 };
 
-export const url = "https://nbte.forum.org.ng/api/";
+export const url = "http://nbte.forum.org.ng/api/";
 
 //http://41.76.251.210/api/
