@@ -47,6 +47,7 @@
             v-model="schoolInfo.name"
             type="text"
             required
+            readonly="false"
             placeholder="Kaduna Polytechnic"
           />
         </b-form-group>

@@ -4,11 +4,11 @@
       <div class="top-display">
         <b style="margin-left: 10px; font-size: 20px" class="montserrat">Ranking Criteria</b>
         <b-btn class="buttons" @click="gotoAddCriteria">
-          <font-awesome-icon style="margin-right: 3px" :icon="['fas', 'plus']"/>Add Criteria
+          <font-awesome-icon style="margin-right: 3px" :icon="['fas', 'plus']" />Add Criteria
         </b-btn>
       </div>
     </b-row>
-    <br>
+    <br />
     <b-row>
       <b-col md="6">
         <div class="top-display" style="margin-top: 10px">
@@ -21,14 +21,14 @@
           <div class="top-display-items green">
             <p>Draft</p>
           </div>
-          <br>
-          <br>
+          <br />
+          <br />
         </div>
       </b-col>
       <b-col md="6">
         <div style="display: flex">
           <div style="flex-grow: 1; width: 350px; margin-left: 40px">
-            <input placeholder="Search" class="form-control mx-auto" type="text">
+            <input placeholder="Search" class="form-control mx-auto" type="text" />
           </div>
           <div style="flex-grow: 1; width: 350px; margin-top: 10px">
             <b-btn class="buttons" style="padding: 8px 40px">Search</b-btn>
@@ -43,7 +43,7 @@
             <tr>
               <th>
                 <label class="form-checkbox">
-                  <input type="checkbox" v-model="selectAll" @click="select">
+                  <input type="checkbox" v-model="selectAll" @click="select" />
                   <i class="form-icon"></i>
                 </label>
               </th>
@@ -57,18 +57,18 @@
             <tr v-for="i in criteria" :key="i.id" @dblclick="edit(i.id)">
               <td>
                 <label class="form-checkbox">
-                  <input type="checkbox" :value="i.id" v-model="selected">
+                  <input type="checkbox" :value="i.id" v-model="selected" />
                   <i class="form-icon"></i>
                 </label>
               </td>
               <td>{{i.id}}</td>
               <td>{{i.name}}</td>
               <td>{{i.weight}}</td>
-              <td>{{i.updated_at}}</td>
+              <td>{{formatDate(i.updated_at)}}</td>
               <td>
                 <!-- <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/> -->
                 <div class="dropdown" style="margin-left: auto; margin-right: 20px">
-                  <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x"/>
+                  <font-awesome-icon class="menu" :icon="['fas', 'ellipsis-v']" size="1x" />
                   <ul
                     class="dropdown-menu"
                     style="position: absolute; top: -10px; margin-left: -150px"
@@ -142,7 +142,7 @@
 </template>
 
 <script>
-import { url, getHeader } from '@/config.js'
+import { url, getHeader } from "@/config.js";
 
 export default {
   data() {
@@ -150,12 +150,12 @@ export default {
       selected: [],
       selectAll: false,
       criteria: [],
-      name: '',
-      weight: '',
+      name: "",
+      weight: "",
       totalPage: 20,
       perPage: 10,
-      currentPage: 1,
-    }
+      currentPage: 1
+    };
   },
   methods: {
     select() {
@@ -166,47 +166,77 @@ export default {
         }
       }
     },
-    edit: function (id) {
+    edit: function(id) {
       this.$router.push(`/admin/editcriteria/${id}`);
     },
     gotoAddCriteria() {
-      this.$router.push('/admin/addCriteria');
+      this.$router.push("/admin/addCriteria");
     },
     addCriteria() {
       const { name, weight } = this;
-      this.$http.post(url + 'criteria', { name, 'weight': weight }, { headers: getHeader() }).then((response) => {
-        if (response.data.success) {
-          this.$swal({
-            type: 'success',
-            title: 'Sucess',
-            text: 'Criteria added successfully',
-            timer: 2000,
-          });
-        }
-      })
+      this.$http
+        .post(
+          url + "criteria",
+          { name, weight: weight },
+          { headers: getHeader() }
+        )
+        .then(response => {
+          if (response.data.success) {
+            this.$swal({
+              type: "success",
+              title: "Sucess",
+              text: "Criteria added successfully",
+              timer: 2000
+            });
+          }
+        });
     },
-    deleteI: function (id) {
-      this.$http.delete(url + 'criteria/' + id, { headers: getHeader() }).then(() => {
-        this.getCriteria();
-      })
+    deleteI: function(id) {
+      this.$http
+        .delete(url + "criteria/" + id, { headers: getHeader() })
+        .then(() => {
+          this.getCriteria();
+        });
+    },
+    formatDate(date) {
+      if (date !== null) {
+        let dateCopy = new Date(date);
+        let year = dateCopy.getFullYear();
+        let month = dateCopy.getMonth() + 1;
+        let dt = dateCopy.getDate();
+
+        if (dt < 10) {
+          dt = "0" + dt;
+        }
+        if (month < 10) {
+          month = "0" + month;
+        }
+
+        return year + "-" + month + "-" + dt;
+      } else {
+        return date;
+      }
     },
     handlePageChange(next) {
       this.getCriteria(next);
     },
     getCriteria(next = 1) {
-      this.$http.get(url + `criteria?page=${next}&size=10`).then((response) => {
+      this.$http.get(url + `criteria?page=${next}&size=10`).then(response => {
         this.criteria = response.data.data;
         this.totalPage = response.data.data.total;
         this.perPage = response.data.data.perPage;
         this.currentPage = response.data.data.page;
-      })
+      });
     }
   },
   created() {
     this.getCriteria();
-    (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1) ? this.$parent.display = false : true;
+    typeof window.orientation !== "undefined" ||
+    navigator.userAgent.indexOf("IEMobile") !== -1
+      ? (this.$parent.display = false)
+      : true;
   }
-}
+};
 </script>
 
 <style scoped>

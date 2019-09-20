@@ -5,13 +5,13 @@
         <b style="margin-left: 10px; font-size: 20px" class="montserrat">Rank Institution</b>
       </div>
     </b-row>
-    <br>
+    <br />
     <b-row>
       <b-col md="6"></b-col>
       <b-col md="6">
         <div style="display: flex">
           <div style="flex-grow: 1; width: 350px; margin-left: 40px">
-            <input placeholder="Search" class="form-control mx-auto" type="text">
+            <input placeholder="Search" class="form-control mx-auto" type="text" />
           </div>
           <div style="flex-grow: 1; width: 350px; margin-top: 10px">
             <b-btn class="buttons" style="padding: 8px 40px">Search</b-btn>
@@ -22,9 +22,10 @@
     <div style="margin-top: 20px; color: #333333; font-size: 15px; font-family: montserrat">
       <b-form class="addNewInstitution" @submit.prevent="rankInstitution">
         <b-row>
-          <b-col md="6" v-for="(c) in criteria" :key="c.id">
+          <b-col md="6" v-for="(c,i) in criteria" :key="c.id">
+            <b>{{i+1}}.</b>
             <b-form-group :label="c.name">
-              <b-form-input v-model="c.score" type="number" :min="0" :max="5" required/>
+              <b-form-input v-model="c.score" type="number" :min="0" :max="5" required />
             </b-form-group>
           </b-col>
         </b-row>
@@ -39,58 +40,59 @@
 </template>
 
 <script>
-import { getHeader, url } from '@/config.js';
+import { getHeader, url } from "@/config.js";
 
 export default {
   data() {
     return {
       id: this.$route.params.Id,
       criterias: [],
-      criteria: [
-
-      ],
-    }
+      criteria: []
+    };
   },
   methods: {
     rankInstitution() {
       const { criteria } = this;
       let newobj = criteria.map(item => {
-        return ({ 'criterion_id': item.criterion_id, 'score': item.score });
+        return { criterion_id: item.criterion_id, score: item.score };
       });
       let object = {
-        "criteria": newobj
-      }
-      this.$http.post(url + `institution/${this.id}/criteria`, object, { headers: getHeader() }).then((response) => {
-        if (response.data.success) {
-          this.$swal({
-            type: 'success',
-            title: 'Sucess',
-            text: 'Institution ranked successfully',
-            timer: 3000,
-          });
-          this.$router.push('/admin/rank');
-        }
-      })
+        criteria: newobj
+      };
+      this.$http
+        .post(url + `institution/${this.id}/criteria`, object, {
+          headers: getHeader()
+        })
+        .then(response => {
+          if (response.data.success) {
+            this.$swal({
+              type: "success",
+              title: "Sucess",
+              text: "Institution ranked successfully",
+              timer: 3000
+            });
+            this.$router.push("/admin/rank");
+          }
+        });
     },
     getCriteria() {
-      this.$http.get(url + `criteria`).then((response) => {
+      this.$http.get(url + `criteria`).then(response => {
         this.criterias = response.data.data;
         let c = response.data.data;
         for (let i = 0; i < c.length; i++) {
           this.criteria.push({
-            "criterion_id": c[i].id,
-            "score": c[i].weigth,
-            "name": c[i].name,
-          })
+            criterion_id: c[i].id,
+            score: c[i].weigth,
+            name: c[i].name
+          });
         }
-      })
-    },
+      });
+    }
   },
   created() {
     this.getCriteria();
   }
-}
-
+};
 </script>
 
 <style scoped>
